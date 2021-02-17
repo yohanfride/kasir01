@@ -144,8 +144,8 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="kategori">Metode Bayar</label>
-                                <select class="form-control" id="kategori" name="kategori" >
+                                <label for="metode_bayar">Metode Bayar</label>
+                                <select class="form-control" id="metode_bayar" name="metode_bayar" >
                                     <option value="CASH">CASH</option>
                                     <option value="ovo">OVO</option>
                                     <option value="dana">DANA</option>

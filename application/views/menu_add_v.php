@@ -107,3 +107,4 @@
 </script>
 
             
+<!-- file:///D:/Assets/html-template/modernadmin/modernadmin/modern-admin-1.0/html/ltr/vertical-menu-template/add-on-image-cropper.html -->

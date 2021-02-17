@@ -1,0 +1,106 @@
+/*================================================================================
+	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
+	Version: 1.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.navbar-container .search-input.open{
+	width: 300px;
+}
+.navbar-container .search-input.open .input{
+	width: 300px;
+}
+
+.navbar-container .search-input .btn{
+	width: 0px !important;
+	display: none !important;
+}
+
+
+.navbar-container .search-input.open .btn{
+	width: 60px !important;
+	display: block !important;
+}
+
+
+
+.btn.btn-round{
+	border-radius: 50%;
+}
+
+@media (min-width: 1025px) {
+	.img-fluid{
+		max-height: 200px !important;
+	}
+	.product-img{
+		min-height: 200px !important;
+	}
+}
+
+@media (max-width: 1024px) {
+	.img-fluid{
+		max-height: 100px !important;
+	}
+	
+	.product-img{
+		min-height: 110px !important;
+	}
+	.card-body{
+		padding:1rem !important;
+	}
+}
+
+.price-reviews .price-box .price{
+	font-size: 15px;
+}
+
+.btn-add{
+	margin-top: -70px; 
+	position: absolute;  
+	width:100%;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+}
+
+.product-title{
+	font-size: 15px;
+}
+
+.product-color{
+	font-color: 15px;
+}
+
+.customizer {
+    width: 500px;
+    right: -500px;
+}
+
+.total-price{
+	font-size: 15px;
+}
+
+.list-price{
+	width: 120px; 
+	vertical-align: middle !important;
+}
+
+.list-qty{
+	width: 170px; 
+}
+
+
+.list-no{
+	width: 50px; 
+	vertical-align: middle !important;
+}
+
+.border-bottom{
+	border-bottom: 1px solid #E4E7ED;
+}

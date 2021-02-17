@@ -52,6 +52,17 @@ class Menu_m extends My_Model{
 		return $r;
 	}
 	
+	function get_kategori($status = ''){
+		$sql = "SELECT a.*,COUNT(b.idmenu) AS total FROM kategori a left join menu b on a.idkategori = b.idkategori ";
+		if($status != ''){
+			$sql.= " WHERE b.status = $status ";
+		}
+		$sql.= " GROUP BY a.idkategori ORDER by kategori ASC";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
 }
 
 /* End of file admin_model.php */

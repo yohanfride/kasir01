@@ -77,6 +77,23 @@ class akun extends CI_Controller {
 		$this->load->view('akun_edit_v', $data);
 	}		
 
+	public function tambah_api(){       
+		$data=array();
+    	$input = array(
+    		"akun" =>  strtoupper($this->input->post('nama_akun')),
+    	);
+    	$respo = $this->akun_m->insert('akun',$input);
+        if($respo){             
+            $data['status']=true; 
+            $data['akun_baru'] = strtoupper($this->input->post('nama_akun'));
+			$data['data'] = $this->akun_m->search_api('');
+        } else {                
+            $data['status']=false;
+        }                       
+        header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+
 	public function delete($id){					
 		if(!$this->akun_m->cek_hapus($id)){
 			$del=$this->akun_m->delete('akun','idakun',$id);

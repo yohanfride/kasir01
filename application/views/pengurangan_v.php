@@ -101,7 +101,7 @@
                             <tr>
                                 <td class="text-nowrap"><?= ++$no; ?></td>
                                 <td><?= date_format(date_create($d->date_add), 'd/m/Y H:i'); ?></td>
-                                <td class="text-nowrap"><?= $d->nama ?></td>
+                                <td class="text-nowrap"><?= $d->nama.' ('.$d->satuan.')' ?></td>
                                 <td class="text-nowrap"><?= number_format($d->jumlah,0,',','.');  ?></td>
                                 <td><?= $d->keterangan ?></td>
                                 <td>

@@ -94,7 +94,9 @@
                                 <th>Biaya Tambahan</th>
                                 <th>Total Pembelian</th>
                                 <th>Catatan</th>
+                                <?php if($user_now->role != 'pegawai'){ ?>
                                 <th style="width: 10%">Aksi</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,12 +108,14 @@
                                 <td class="text-nowrap">Rp. <?= number_format($d->biaya_tambahan,0,',','.');  ?></td>
                                 <td class="text-nowrap">Rp. <?= number_format($d->total,0,',','.');  ?></td>
                                 <td><?= $d->catatan ?></td>
+                                <?php if($user_now->role != 'pegawai'){ ?>
                                 <td>
                                     <div class="form-button-action">
                                         <a href="<?= base_url();?>pembelian/detail/<?= $d->idpembelian; ?>" data-toggle="tooltip" data-original-title="Detail" class="m-r-10" > <i class="fa fa-search text-secondary"></i> </a>
                                         <a href="<?= base_url();?>pembelian/delete/<?= $d->idpembelian; ?>" data-toggle="tooltip" data-original-title="Hapus" class="btn-delete"> <i class="fa fa-close text-danger"></i> </a>
                                     </div>
                                 </td>
+                                <?php } ?>
                             </tr>
                             <?php } ?>
                         </tbody>

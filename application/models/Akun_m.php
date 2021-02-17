@@ -39,6 +39,13 @@ class akun_m extends My_Model{
 		return $r;
 	}
 	
+	function search_api(){
+		$sql = "SELECT * FROM akun  WHERE hapus <> 0 ORDER by akun ASC";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
 }
 
 /* End of file admin_model.php */

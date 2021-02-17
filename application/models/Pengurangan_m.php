@@ -8,7 +8,7 @@ class Pengurangan_m extends My_Model{
 	}			
 	
 	function search($s,$awal,$akhir,$id="",$lim=20,$off=0){
-		$sql = "SELECT a.*,b.nama,b.jumlah_stok FROM pengurangan_stok a join stok b on a.idstok = b.idstok WHERE nama LIKE '%$s%' 
+		$sql = "SELECT a.*,b.nama,b.jumlah_stok,b.satuan FROM pengurangan_stok a join stok b on a.idstok = b.idstok WHERE nama LIKE '%$s%' 
 				AND a.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59' ";
 		if($id){
 			$sql.= " AND a.idstok = $id ";
