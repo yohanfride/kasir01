@@ -7,7 +7,7 @@ class Menu_m extends My_Model{
 		parent::__construct();		
 	}			
 	
-	function search($s,$kat="",$status){
+	function search($s,$kat="",$status=''){
 		$sql = "SELECT * FROM menu a join kategori b on a.idkategori = b.idkategori WHERE  menu LIKE '%$s%' ";
 		if($kat){
 			$sql.= " AND a.idkategori = $kat ";

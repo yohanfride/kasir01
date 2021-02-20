@@ -138,55 +138,6 @@ class cetak extends CI_Controller {
 		    foreach ($footer as $val) {
 		        $printer->text($val."\n"); 
 		    }
-
-
-		    // /* Title of receipt */
-		    // $printer->setEmphasis(true);
-		    // $printer->text("SALES INVOICE\n");
-		    // $printer->setEmphasis(false);
-
-		    // /* Items */
-		    // $printer->setJustification(Printer::JUSTIFY_LEFT);
-		    // $printer->setEmphasis(true);
-		    // $printer->text(new item('', '$'));
-		    // $printer->setEmphasis(false);
-		    // foreach ($items as $item) {
-		    //     $printer->text($item->getAsString(32)); // for 58mm Font A
-		    // }
-		    // $printer->setEmphasis(true);
-		    // $printer->text($subtotal->getAsString(32));
-		    // $printer->setEmphasis(false);
-		    // $printer->feed();
-
-		    // /* Tax and total */
-		    // $printer->text($tax->getAsString(32));
-		    // $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-		    // $printer->text($total->getAsString(32));
-		    // $printer->selectPrintMode();
-
-		    // /* Footer */
-		    // $printer->feed(2);
-		    // $printer->setJustification(Printer::JUSTIFY_CENTER);
-		    // $printer->text("Thank you for shopping\n");
-		    // $printer->text("at ExampleMart\n");
-		    // $printer->text("For trading hours,\n");
-		    // $printer->text("please visit example.com\n");
-		    // $printer->feed(2);
-		    // $printer->text($date . "\n");
-
-		    /* Barcode Default look */
-		    // $printer->barcode("ABC", Printer::BARCODE_CODE39);
-		    // $printer->feed();
-		    // $printer->feed();
-			// Demo that alignment QRcode is the same as text
-		    // $printer2 = new Printer($connector); // dirty printer profile hack !!
-		    // $printer2->setJustification(Printer::JUSTIFY_CENTER);
-		    // $printer2->qrCode("https://rawbt.ru/mike42", Printer::QR_ECLEVEL_M, 8);
-		    // $printer2->text("rawbt.ru/mike42\n");
-		    // $printer2->setJustification();
-		    // $printer2->feed();
-
-		    /* Cut the receipt and open the cash drawer */
 		    $printer->cut();
 		    $printer->pulse();
 

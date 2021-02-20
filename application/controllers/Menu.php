@@ -29,7 +29,7 @@ class Menu extends CI_Controller {
 		$data['kategori'] = $this->input->get('kategori'); 
 		$data['status'] = $this->input->get('status'); 
 		$data['data'] = $this->menu_m->search($data['s'],$data['kategori'],$data['status']);
-		$data['user_now'] = $this->session->userdata('kasir01');		        
+		$data['user_now'] = $this->session->userdata('kasir01');
 		$this->load->view('menu_v', $data);
 	}
 

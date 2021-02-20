@@ -9,7 +9,7 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url()?>">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="<?= base_url()?>transaksi">Transaksi</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url()?>transaksi<?= (!empty($params))?'/?'.$params:''; ?>">Transaksi</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
     </div>
@@ -231,7 +231,7 @@
         });
 
         $("#btnbatal").click(function(){
-            return confirm('Apakah anda yakin membatlakn transaksi ini?');
+            return confirm('Apakah anda yakin membatalkan transaksi ini?');
         });
     });
 

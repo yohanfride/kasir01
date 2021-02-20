@@ -46,6 +46,7 @@
     <link href="<?= base_url();?>assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
     <?php } ?>
     <?php if(!empty($chart)){ ?>
+    <link href="<?= base_url();?>assets/plugins/morrisjs/morris.css" rel="stylesheet">
     <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
     <link href="<?= base_url();?>assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
@@ -154,11 +155,11 @@
                         <li <?php if($menu == 'transaksi'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>transaksi" ><i class="mdi mdi-cart"></i><span class="hide-menu">Transaksi</span></a></li>
                         <li <?php if($menu == 'pembelian'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>pembelian" ><i class="mdi mdi-cart-plus"></i><span class="hide-menu">Pembelian Bahan</span></a></li>
                         <li <?php if($menu == 'pengurangan'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>pengurangan" ><i class="mdi mdi-basket-unfill"></i><span class="hide-menu">Pengurangan Bahan</span></a></li>
-                        <li <?php if($menu == 'cash flow'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>cashflow" ><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Cash Flow</span></a></li>
+                        <li <?php if($menu == 'cashflow'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>cashflow" ><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">Cash Flow</span></a></li>
                         <li class="nav-small-cap">LAPORAN</li>
-                        <li <?php if($menu == 'income chart'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/pemasukan" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Pemasukan</span></a></li>
-                        <li <?php if($menu == 'outcome chart'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/pengeluaran" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Pengeluaran</span></a></li>
-                        <li <?php if($menu == 'cash flow chart'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/cashflow" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Cash Flow</span></a></li>
+                        <li <?php if($menu == 'laporan-penjualan'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/penjualan" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Penjualan</span></a></li>
+                        <li <?php if($menu == 'laporan-pembelian'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/pembelian" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Pembelian</span></a></li>
+                        <li <?php if($menu == 'laporan-cashflow'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>report/cashflow" ><i class="mdi mdi-file-chart"></i><span class="hide-menu">Laporan Cash Flow</span></a></li>
                         <?php if($user_now->role != 'pegawai'){ ?>
                         <li class="nav-small-cap">ADMINISTRATOR</li>
                         <li <?php if($menu == 'user'){ echo 'class="active"'; } ?> > <a class="waves-effect" href="<?= base_url()?>user" ><i class="mdi mdi-account"></i><span class="hide-menu">Pengguna</span></a></li>

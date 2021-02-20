@@ -30,9 +30,6 @@
                     <h3 class="card-title">Form Pencarian Data</h3>
                 </div>
                 <div class="card-body">
-                    <!-- <h3 class="card-title">Data Pengurangan Stok Bahan</h3>
-                    <h3 class="card-title mb-3">Form Pencarian Data</h3> -->
-
                     <div class="row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
@@ -108,14 +105,16 @@
                                 <td class="text-nowrap">Rp. <?= number_format($d->biaya_tambahan,0,',','.');  ?></td>
                                 <td class="text-nowrap">Rp. <?= number_format($d->total,0,',','.');  ?></td>
                                 <td><?= $d->catatan ?></td>
-                                <?php if($user_now->role != 'pegawai'){ ?>
+                                
                                 <td>
                                     <div class="form-button-action">
                                         <a href="<?= base_url();?>pembelian/detail/<?= $d->idpembelian; ?>" data-toggle="tooltip" data-original-title="Detail" class="m-r-10" > <i class="fa fa-search text-secondary"></i> </a>
+                                        <?php if($user_now->role != 'pegawai'){ ?>
                                         <a href="<?= base_url();?>pembelian/delete/<?= $d->idpembelian; ?>" data-toggle="tooltip" data-original-title="Hapus" class="btn-delete"> <i class="fa fa-close text-danger"></i> </a>
+                                        <?php } ?>
+
                                     </div>
                                 </td>
-                                <?php } ?>
                             </tr>
                             <?php } ?>
                         </tbody>

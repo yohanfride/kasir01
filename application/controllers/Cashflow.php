@@ -52,6 +52,16 @@ class cashflow extends CI_Controller {
 		$data['total'] = $this->cashflow_m->search_total($data['s'],$data['str_date'],$data['end_date'],$data['akun'],$data['jenis']);
 		$data['user_now'] = $this->session->userdata('kasir01');	
 		$data['list_akun'] = $this->akun_m->search('');
+		////
+		$params = $_GET;
+		unset($params['alert']);
+		$data['params'] = http_build_query($params);
+		$last_params = array(
+			'params' => $data['params'],
+			'menu' => $data['menu']
+		);
+		$this->session->set_userdata('lastparams',$last_params);
+		/////
 		$this->load->view('cashflow_v', $data);
 	}
 
@@ -86,6 +96,13 @@ class cashflow extends CI_Controller {
             }                       
         }
 		$data['list_akun'] = $this->akun_m->search_api();
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
+
 		$this->load->view('cashflow_add_v', $data);
 	}
 
@@ -121,22 +138,36 @@ class cashflow extends CI_Controller {
         $data['data'] = $this->cashflow_m->get_detail($id);        
 		$data['id'] = $id;
 		$data['list_akun'] = $this->akun_m->search_api();
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
+
 		$this->load->view('cashflow_edit_v', $data);
 	}
 
 	public function delete($id){
         $user = $this->session->userdata('kasir01');
+        
+        $params = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == 'cashflow'){
+			$params = '&'.$lastparams->params;
+		}
+
         if($user->role == 'kasir' || $user->role == 'pegawai')
-			redirect(base_url().'cashflow/?alert=failed') ; 			
+			redirect(base_url().'cashflow/?alert=failed'.$params) ; 			
 
         $data = $this->cashflow_m->cekhapus($id);        
 		if(!$data){
-			$del=$this->cashflow_m->delete('keuangan','idkeuangan',$id);
+			$del= $this->cashflow_m->delete('keuangan','idkeuangan',$id);
 			if($del){
-				redirect(base_url().'cashflow/?alert=success') ; 			
+				redirect(base_url().'cashflow/?alert=success'.$params) ; 			
 			} 
 		}
-		redirect(base_url().'cashflow/?alert=failed') ; 			
+		redirect(base_url().'cashflow/?alert=failed'.$params) ; 			
 	}
 
 }

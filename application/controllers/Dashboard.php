@@ -26,6 +26,7 @@ class dashboard extends CI_Controller {
 		/// Jumlah pembelian bahan hari ini
 		/// Cash flow keseluaran hari ini (keluar, masuk)
 		/// Grafik jam pemasukan
+		/// Pie Chart PEnjualan per Kategori Menu
 	}	
 }
 

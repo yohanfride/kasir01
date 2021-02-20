@@ -43,13 +43,13 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="body-machine">Tanggal Mulai</label>
-                                <input type="text" class="form-control date-format" data-name="str" name="str" placeholder="Enter Birth" required="required" value="<?= $str_date?>" >
+                                <input type="text" class="form-control date-format" data-name="str" name="str" placeholder="Tulis Tanggal Mulai" required="required" value="<?= $str_date?>" >
                             </div>
                         </div>
                         <div class="col-md-3  col-sm-6">
                             <div class="form-group">
                                 <label for="body-machine">Tanggal Akhir</label>
-                                <input type="text" class="form-control date-format" data-name="end" name="end" placeholder="Enter Birth" required="required" value="<?= $end_date?>" >
+                                <input type="text" class="form-control date-format" data-name="end" name="end" placeholder="Tulis Tanggal Akhir" required="required" value="<?= $end_date?>" >
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -121,8 +121,11 @@
                                 <td>
                                     <div class="form-button-action">
                                         <a href="<?= base_url();?>transaksi/detail/<?= $d->faktur; ?>" data-toggle="tooltip" data-original-title="Detail" class="m-r-10" > <i class="fa fa-search text-secondary"></i> </a>
-                                        <a href="<?= base_url();?>transaksi/print/<?= $d->faktur; ?>" data-toggle="tooltip" data-original-title="Cetak Struk" class="m-r-10" > <i class="fa fa-print text-primary"></i> </a>
+                                        <a href="#" onclick="ajax_print('<?= $d->faktur; ?>')" data-toggle="tooltip" data-original-title="Cetak Struk" class="m-r-10" > <i class="fa fa-print text-primary"></i> </a>
+
+                                        <?php if($user_now->role != 'pegawai'){ ?>
                                         <a href="<?= base_url();?>transaksi/delete/<?= $d->faktur; ?>" data-toggle="tooltip" data-original-title="Hapus" class="btn-delete"> <i class="fa fa-close text-danger"></i> </a>
+                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>
@@ -158,5 +161,26 @@
     $(document).ready(function() {
         $('.date-format').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
     });
-
+</script>
+<script src="<?= base_url()?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<?= base_url()?>assets/plugins/sweetalert/jquery.sweet-alert.custom.js"></script>
+<script>
+   function ajax_print(faktur) {
+      var url ='<?= base_url(); ?>cetak/ajax_transkasi/'+faktur;
+        swal('Proses Cetak','Sistem akan mencetak struk secara otomatis','success',{
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            closeModal:false,
+            buttons:false  
+        });
+        $.get(url, function (data) {
+            window.location.href = data;
+            setTimeout(function(){ 
+              swal('Proses Cetak Berhasil','Proses percetakan berhasil dilakukan','success');
+            }, 3000);
+        }).fail(function () {
+            swal('Proses Cetak Gagal','Proses percetakan gagal dilakukan','warning');
+            alert("ajax error");
+        });
+    }
 </script>

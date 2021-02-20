@@ -9,7 +9,7 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url()?>">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="<?= base_url()?>transaksi">Transaksi</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url()?>transaksi<?= (!empty($params))?'/?'.$params:''; ?>">Transaksi</a></li>
             <li class="breadcrumb-item active">Detail</li>
         </ol>
     </div>
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="d-lg-flex align-items-center">
                         <h3 class="card-title">Detail Transkasi</h3>
-                        <a href="<?= base_url()?>transaksi/cetak/<?= $transaksi->faktur?>" class="ml-auto"><button class="btn btn-primary btn-round ml-auto">
+                        <a href="#" onclick="ajax_print('<?= $transaksi->faktur?>')" class="ml-auto"><button class="btn btn-primary btn-round ml-auto">
                             <i class="fa fa-print"></i>
                             Cetak Struk Transkasi
                         </button></a>
@@ -78,7 +78,7 @@
                         </tbody>
                     </table>
                     <div class="form-actions">
-                        <a href="<?= base_url("pembelian")?>" ><button type="button" class="btn btn-inverse">Kembali</button></a>
+                        <a href="<?= base_url("transaksi")?><?= (!empty($params))?'?'.$params:''; ?>" ><button type="button" class="btn btn-inverse">Kembali</button></a>
                     </div>
                 </div>
             </div>
@@ -139,18 +139,27 @@
     
 
 <?php include("footer.php") ?>
-
+<script src="<?= base_url()?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<?= base_url()?>assets/plugins/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script>
-    $(document).ready(function() {
-        /*{
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        }*/
-    });
-    
-    </script>
-
+   function ajax_print(faktur) {
+      var url ='<?= base_url(); ?>cetak/ajax_transkasi/'+faktur;
+        swal('Proses Cetak','Sistem akan mencetak struk secara otomatis','success',{
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            closeModal:false,
+            buttons:false  
+        });
+        $.get(url, function (data) {
+            window.location.href = data;
+            setTimeout(function(){ 
+              swal('Proses Cetak Berhasil','Proses percetakan berhasil dilakukan','success');
+            }, 3000);
+        }).fail(function () {
+            swal('Proses Cetak Gagal','Proses percetakan gagal dilakukan','warning');
+            alert("ajax error");
+        });
+    }
+</script>
 
                 

@@ -85,7 +85,7 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script> -->
-    <script src="<?= base_url()?>assets/js/dashboard4.js"></script>
+    <!-- <script src="<?= base_url()?>assets/js/dashboard4.js"></script> -->
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

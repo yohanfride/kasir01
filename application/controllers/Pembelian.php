@@ -49,6 +49,16 @@ class pembelian extends CI_Controller {
 		////End Paginator////
 		$data['data'] = $this->pembelian_m->search($data['s'],$data['str_date'],$data['end_date'],$dataPerhalaman,$off);
 		$data['user_now'] = $this->session->userdata('kasir01');		        
+		////
+		$params = $_GET;
+		unset($params['alert']);
+		$data['params'] = http_build_query($params);
+		$last_params = array(
+			'params' => $data['params'],
+			'menu' => $data['menu']
+		);
+		$this->session->set_userdata('lastparams',$last_params);
+		/////
 		$this->load->view('pembelian_v', $data);
 	}
 
@@ -110,6 +120,13 @@ class pembelian extends CI_Controller {
 		}
 		$data['pembelian'] = (object)$this->session->userdata('item-pembelian');
 		$data['bahan'] = $this->bahan_m->search('');
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
+
 		$this->load->view('pembelian_add_v', $data);
 	}
 
@@ -122,13 +139,27 @@ class pembelian extends CI_Controller {
 		$data['success']='';
 		$data['error']='';
 		$data['pembelian'] = $this->pembelian_m->get_detail($id);
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
+
 		$this->load->view('pembelian_detail_v', $data);
 	}
 
 	public function delete($id){
         $user = $this->session->userdata('kasir01');
+        
+        $params = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == 'pembelian'){
+			$params = '&'.$lastparams->params;
+		}
+
         if($user->role == 'kasir' || $user->role == 'pegawai')
-			redirect(base_url().'pembelian/?alert=failed2') ; 		
+			redirect(base_url().'pembelian/?alert=failed2'.$params) ; 		
 
 		$pembelian = $this->pembelian_m->get_detail($id);
 		$bahan = $pembelian->item;
@@ -142,9 +173,9 @@ class pembelian extends CI_Controller {
         	}
 			$respo = $this->pembelian_m->delete('pembelian','idpembelian',$id);
 			$respo = $this->cashflow_m->delete('keuangan','idpembelian',$id);
-			redirect(base_url().'pembelian/?alert=success') ; 			
+			redirect(base_url().'pembelian/?alert=success'.$params) ; 			
 		} 
-		redirect(base_url().'pembelian/?alert=failed') ; 			
+		redirect(base_url().'pembelian/?alert=failed'.$params) ; 			
 	}
 
 }

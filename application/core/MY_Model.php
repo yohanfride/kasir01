@@ -375,6 +375,86 @@ class MY_Model extends CI_Model {
         return $output;
     }
 
+    function page_2($jml='', $perhalaman='' ,$hal=''){
+        // jumlah data yang akan ditampilkan per halaman        
+        $dataPerhalaman = $perhalaman;
+        $showhalaman = 0;
+        $nohalaman = 0;
+        // apabila $_GET['halaman'] sudah didefinisikan, gunakan nomor halaman tersebut, 
+        // sedangkan apabila belum, nomor halamannya 1.
+        if($hal==''){
+            $nohalaman = 1;
+        }else{ 
+            $nohalaman = $hal;      
+        }
+        
+        $jumData = $jml;
+
+        // menentukan jumlah halaman yang muncul berdasarkan jumlah semua data
+        $jumhalaman = ceil($jumData/$dataPerhalaman);
+        
+        $output = '<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                    <ul class="pagination">';
+        // menampilkan link previous
+        if ($nohalaman > 1){
+
+            $params = $_GET;
+            $params['hal'] = $nohalaman-1;
+
+            $query = http_build_query($params);        
+            $output .= '<li class="paginate_button page-item previous" id="DataTables_Table_0_previous">
+                <a href="?'.$query.'" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+            </li>';
+        } else {        
+            $output .= '<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+            </li>';
+        }
+
+
+        // memunculkan nomor halaman dan linknya
+        for($halaman = 1; $halaman <= $jumhalaman; $halaman++)
+        {
+            $params = $_GET;
+            $params['hal'] = $halaman;
+
+            $query = http_build_query($params);
+                 if ((($halaman >= $nohalaman - 2) && ($halaman <= $nohalaman + 2)) || ($halaman == 1) || ($halaman == $jumhalaman)) 
+                 {   
+                    if (($showhalaman == 1) && ($halaman != 2)){  
+                        $output .= '<li class="paginate_button page-item "><a aria-controls="DataTables_Table_0" data-dt-idx="." tabindex="0" class="page-link">...</a></li>';
+                    }if (($showhalaman != ($jumhalaman - 1)) && ($halaman == $jumhalaman)){  
+                        $output .= '<li class="paginate_button page-item "><a aria-controls="DataTables_Table_0" data-dt-idx="." tabindex="0" class="page-link">...</a></li>';
+                    }if ($halaman == $nohalaman){                    
+                        $output .= '<li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="'.$halaman.'" tabindex="0" class="page-link">'.$halaman.'</a></li>';
+                    }else{ 
+                        $output .= '<li class="paginate_button page-item "><a href="?'.$query.'" aria-controls="DataTables_Table_0" data-dt-idx="'.$halaman.'" tabindex="0" class="page-link">'.$halaman.'</a></li>';
+                    }
+                    $showhalaman = $halaman;          
+                 }
+        }
+
+        // menampilkan link next
+        if ($nohalaman < $jumhalaman){ 
+
+            $params = $_GET;
+            $params['hal'] = $nohalaman+1;
+
+            $query = http_build_query($params);
+            $output .= '<li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                <a href="?'.$query.'" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Next</a>
+            </li>';
+        } else {
+            $output .= '<li class="paginate_button page-item next disabled" id="DataTables_Table_0_next">
+                <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Next</a>
+            </li>';
+        }
+
+        $output.='</ul>
+            </div>';
+        return $output;
+    }
+
     function pageold($jml='', $perhalaman='' ,$hal=''){
             // jumlah data yang akan ditampilkan per halaman        
         $dataPerhalaman = $perhalaman;

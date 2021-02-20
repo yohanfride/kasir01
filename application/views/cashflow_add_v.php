@@ -9,7 +9,7 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url()?>">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="<?= base_url()?>cashflow">Cashflow</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url()?>cashflow<?= (!empty($params))?'/?'.$params:''; ?>">Cashflow</a></li>
             <li class="breadcrumb-item active">Tambah Cashflow</li>
         </ol>
     </div>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success" name="save" value="save"> <i class="fa fa-check"></i> Simpan</button>
-                            <a href="<?= base_url("cashflow")?>"><button type="button" class="btn btn-inverse">Batalkan</button></a>
+                            <a href="<?= base_url("cashflow")?><?= (!empty($params))?'/?'.$params:''; ?>"><button type="button" class="btn btn-inverse">Batalkan</button></a>
                         </div>
                     </form>
                 </div>

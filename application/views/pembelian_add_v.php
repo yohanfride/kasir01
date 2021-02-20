@@ -9,7 +9,7 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url()?>">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="<?= base_url()?>pembelian">Pembelian</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url()?>pembelian<?= (!empty($params))?'/?'.$params:''; ?>">Pembelian</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
     </div>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-success" name="save" value="save"> <i class="fa fa-check"></i> Simpan</button>
-                        <a href="<?= base_url("pembelian")?>" id="btnbatal"><button type="button" class="btn btn-inverse">Batalkan</button></a>
+                        <a href="<?= base_url("pembelian") ?><?= (!empty($params))?'/?'.$params:''; ?>" id="btnbatal"><button type="button" class="btn btn-inverse">Batalkan</button></a>
                     </div>
                     <input type="hidden" name="item" id="input-item">
                 </form>
@@ -102,20 +102,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- <tr>
-        <td class="text-nowrap"><?= ++$no; ?></td>
-        <td class="text-nowrap"><?= $d->nama ?></td>
-        <td class="text-nowrap"><?= number_format($d->jumlah,0,',','.');  ?></td>
-        <td>
-            <div class="form-button-action">
-                <a href="<?= base_url();?>pengurangan/delete/<?= $d->idpengurangan_stok; ?>" data-toggle="tooltip" data-original-title="Hapus" class="btn-delete"> <i class="fa fa-close text-danger"></i> </a>
-                <a href="<?= base_url();?>pengurangan/delete/<?= $d->idpengurangan_stok; ?>" data-toggle="tooltip" data-original-title="Hapus" class="btn-delete"> <i class="fa fa-close text-danger"></i> </a>
-            </div>
-        </td>
-    </tr> -->
-
     <button id="btnmodal" alt="default" data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive" style="display: none;" ></button>
     <div id="responsive-modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;"> <!-- tabindex="-1"  -->
         <div class="modal-dialog">
@@ -208,7 +194,7 @@
         });
 
         $("#btnbatal").click(function(){
-            return confirm('Apakah anda yakin membatlakn transaksi ini?');
+            return confirm('Apakah anda yakin mebatalkan transaksi ini?');
         });
     });
 
@@ -280,6 +266,7 @@
         $("#bahan").prop("selectedIndex", 0);
         $("#jumlah").val("");
         $("#detail").val("");
+        $("#harga").val("");
         $("#btnmodal").click();
     }
     function hapusbahan(id){

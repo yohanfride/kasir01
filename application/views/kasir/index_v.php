@@ -4,6 +4,7 @@
                <div class="collapse navbar-collapse" id="navbar-mobile">
                   <ul class="nav navbar-nav mr-auto float-left">
                      <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+                     <!-- <li class="nav-item d-none d-lg-block"><a class="nav-link " href="#" onclick="toggleFullscreen()"><i class="ficon ft-maximize"></i></a></li> -->
                      <li class="nav-item nav-search">
                         <form id="frm-cari" method="post" action="<?= base_url('')?>kasir/api_menu" >
                         <a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
@@ -29,8 +30,8 @@
                      <li class="dropdown dropdown-user nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown" aria-expanded="false"><i class="ficon ft-user"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                           <a class="dropdown-item" href="<?= base_url()?>kasir/profil"><i class="ft-user"></i> Ganti Profil</a>
-                           <a class="dropdown-item" href="<?= base_url()?>kasir/setting"><i class="ft-lock"></i> Ganti Password</a>
+                           <a class="dropdown-item" href="<?= base_url()?>kasir/profil"><i class="ft-user"></i> Ubah Profil</a>
+                           <a class="dropdown-item" href="<?= base_url()?>kasir/setting"><i class="ft-lock"></i> Ubah Password</a>
                            <div class="dropdown-divider"></div>
                            <a class="dropdown-item" href="<?= base_url()?>kasir"><i class="ft-shopping-cart"></i> Kasir</a>
                            <a class="dropdown-item" href="<?= base_url()?>kasir/riwayat"><i class="ft-calendar"></i> Riwayat Transkasi</a>
@@ -165,22 +166,22 @@
 
             <hr>
             <h4 class="mt-1 mb-1 text-bold-500"> Informasi Transkasi </h4>
-            <form class="form form-horizontal" method="post" action="<?= base_url("")?>kasir/pembayaran">
+            <form class="form" method="post" action="<?= base_url("")?>kasir/pembayaran">
                <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="catatan">Catatan</label>
-                    <div class="col-md-9">
+                    <label class="col-md-12 label-control" for="catatan">Catatan</label>
+                    <div class="col-md-12">
                       <textarea id="catatan" rows="4" class="form-control" name="catatan" placeholder="catatan"><?= $transaksi->catatan?></textarea>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="meja">No. Meja</label>
-                    <div class="col-md-9">
+                    <label class="col-md-12 label-control" for="meja">No. Meja</label>
+                    <div class="col-md-12 ">
                       <input type="text" id="meja" class="form-control" placeholder="No. Meja Pelanggan" name="meja" value="<?= $transaksi->meja?>">
                     </div>
                   </div>
                </div>
-               <div class="form-actions right">
+               <div class="form-actions right mb-5">
                   <button type="submit" class="btn btn-success mr-2" name="save" value="save">
                     <i class="la la-check-square-o"></i> Proses Pembayaran
                   </button>

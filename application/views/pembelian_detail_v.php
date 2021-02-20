@@ -9,8 +9,8 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url()?>">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="<?= base_url()?>pembelian">Pembelian</a></li>
-            <li class="breadcrumb-item active">Tambah</li>
+            <li class="breadcrumb-item"><a href="<?= base_url()?>pembelian<?= (!empty($params))?'/?'.$params:''; ?>">Pembelian</a></li>
+            <li class="breadcrumb-item active">Detail</li>
         </ol>
     </div>
     <div>
@@ -54,7 +54,7 @@
                     </tbody>
                 </table>
                 <div class="form-actions">
-                    <a href="<?= base_url("pembelian")?>" ><button type="button" class="btn btn-inverse">Kembali</button></a>
+                    <a href="<?= base_url("pembelian") ?><?= (!empty($params))?'/?'.$params:''; ?>" ><button type="button" class="btn btn-inverse">Kembali</button></a>
                 </div>
             </div>
         </div>
@@ -140,8 +140,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success frm-ajax waves-effect waves-light"><i class="fa fa-check"></i> Simpan</button>
-                        <button id="btn-close" type="button" class="btn btn-inverse frm-ajax waves-effect" data-dismiss="modal">Batal</button>
+                        <button id="btn-close" type="button" class="btn btn-inverse frm-ajax waves-effect" data-dismiss="modal">Kembali</button>
                     </div>
                 </form>
             </div>

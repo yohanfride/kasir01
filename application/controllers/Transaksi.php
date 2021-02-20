@@ -59,7 +59,18 @@ class transaksi extends CI_Controller {
         $data['paginator']=$this->transaksi_m->page($jmldata, $dataPerhalaman, $hal);
 		////End Paginator////
 		$data['data'] = $this->transaksi_m->search($data['s'],$data['str_date'],$data['end_date'],'','',$dataPerhalaman,$off);
-		$data['user_now'] = $this->session->userdata('kasir01');		        
+		$data['user_now'] = $this->session->userdata('kasir01');		   
+		////
+		$params = $_GET;
+		unset($params['alert']);
+		$data['params'] = http_build_query($params);
+		$last_params = array(
+			'params' => $data['params'],
+			'menu' => $data['menu']
+		);
+		$this->session->set_userdata('lastparams',$last_params);
+		/////
+
 		$this->load->view('transkasi_v', $data);
 	}
 
@@ -140,6 +151,13 @@ class transaksi extends CI_Controller {
 		$data['transaksi'] = (object) $data['transaksi'];
 		$data['data'] = $this->menu_m->search('','',1);
 		$data['kategori'] = $this->category_m->search('');
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
+
 		$this->load->view('transkasi_add_v', $data);
 	}
 
@@ -205,6 +223,12 @@ class transaksi extends CI_Controller {
 		$data['success']='';
 		$data['error']='';
 		$data['transaksi'] = $this->transaksi_m->get_detail($faktur);
+
+		$data['params'] = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == $data['menu']){
+			$data['params'] = '&'.$lastparams->params;
+		}
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
@@ -225,17 +249,22 @@ class transaksi extends CI_Controller {
 	}
 
 	public function delete($faktur){
+		$params = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == 'transaksi'){
+			$params = '&'.$lastparams->params;
+		}
         $user = $this->session->userdata('kasir01');
         if($user->role == 'kasir' || $user->role == 'pegawai')
-			redirect(base_url().'transaksi/?alert=failed2') ; 		
+			redirect(base_url().'transaksi/?alert=failed2'.$params) ; 		
 
-		$del=$this->transaksi_m->delete('item_penjualan','faktur',$faktur);
+		$del= $this->transaksi_m->delete('item_penjualan','faktur',$faktur);
 		if($del){
 			$respo = $this->transaksi_m->delete('penjualan','faktur',$faktur);
 			$respo = $this->cashflow_m->delete('keuangan','faktur',$faktur);
-			redirect(base_url().'transaksi/?alert=success') ; 			
+			redirect(base_url().'transaksi/?alert=success'.$params) ; 			
 		} 
-		redirect(base_url().'transaksi/?alert=failed') ; 			
+		redirect(base_url().'transaksi/?alert=failed'.$params) ; 			
 	}
 
 	public function batalkan(){

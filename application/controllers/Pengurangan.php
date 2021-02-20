@@ -49,11 +49,28 @@ class pengurangan extends CI_Controller {
 		$data['data'] = $this->pengurangan_m->search($data['s'],$data['str_date'],$data['end_date'],'',$dataPerhalaman,$off);
 		$data['user_now'] = $this->session->userdata('kasir01');		        
 		$data['bahan'] = $this->bahan_m->search('');
+		////
+		$params = $_GET;
+		unset($params['alert']);
+		$data['params'] = http_build_query($params);
+		$last_params = array(
+			'params' => $data['params'],
+			'menu' => $data['menu']
+		);
+		$this->session->set_userdata('lastparams',$last_params);
+		/////
 		$this->load->view('pengurangan_v', $data);
 	}
 
 	public function delete($id){
         $user = $this->session->userdata('kasir01');
+
+		$params = '';
+		$lastparams = (object)$this->session->userdata('lastparams');
+		if($lastparams->menu == 'pembelian'){
+			$params = '&'.$lastparams->params;
+		}
+
         if($user->role == 'kasir' || $user->role == 'pegawai')
 			redirect(base_url().'pengurangan/?alert=failed') ; 			
 

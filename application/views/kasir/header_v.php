@@ -3,7 +3,7 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+      <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"> -->
       <title> <?= $title; ?> </title>
       <link rel="icon" type="image/png" href="<?= base_url()?>assets/upload/toko/<?= $toko->icon; ?>">
       <link href="<?= base_url()?>assets/kasir/assets/font.css" rel="stylesheet">
@@ -17,11 +17,12 @@
       <!-- BEGIN Page Level CSS-->
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/app-assets/css/core/menu/menu-types/vertical-menu.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/app-assets/css/core/colors/palette-gradient.css">
-      <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/app-assets/vendors/css/cryptocoins/cryptocoins.css">
+      <!-- <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/app-assets/vendors/css/cryptocoins/cryptocoins.css"> -->
       <!-- END Page Level CSS-->
       <!-- BEGIN Custom CSS-->
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/style.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/ecommerce-shop.min.css">
+      <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/ecommerce-cart.min.css">
       <link href="<?= base_url()?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
       <!-- END Custom CSS-->
    </head>

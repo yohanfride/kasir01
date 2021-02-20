@@ -14,6 +14,7 @@ class kasir extends CI_Controller {
 		$this->load->model('menu_m');
 		$this->load->model('transaksi_m');
 		$this->load->model('cashflow_m');
+		$this->load->model('user_m');
     }
 
     function randomString($n) { 
@@ -217,16 +218,92 @@ class kasir extends CI_Controller {
         $off = abs( (int) $offset);
         $data['offset']=$offset;
 		$jmldata=$this->transaksi_m->search_count($data['s'],$data['str_date'],$data['end_date']);
-        $data['paginator']=$this->transaksi_m->page($jmldata, $dataPerhalaman, $hal);
+        $data['paginator']=$this->transaksi_m->page_2($jmldata, $dataPerhalaman, $hal);
 		////End Paginator////
 		$data['data'] = $this->transaksi_m->search($data['s'],$data['str_date'],$data['end_date'],'','',$dataPerhalaman,$off);
 		$data['user_now'] = $this->session->userdata('kasir01');		        
 		$this->load->view('kasir/riwayat_v', $data);
 	}
 
-	public function cetak_ajax($faktur){
-
+	public function detail($faktur){
+		$data=array();
+		$data['toko'] = $this->toko_m->get();
+		$data['user_now'] =  $this->session->userdata('kasir01');
+		$data['title'] = $data['toko']->nama_toko.' - Detail';
+		$data['menu']='transaksi';
+		$data['success']='';
+		$data['error']='';
+		$data['transaksi'] = $this->transaksi_m->get_detail($faktur);
+		$this->load->view('kasir/detail_v', $data);
 	}
+
+	public function profil(){       
+		$data=array();
+		$data['toko'] = $this->toko_m->get();
+		$data['user_now'] =  $this->session->userdata('kasir01');
+		$data['title'] = $data['toko']->nama_toko.' - Profil Saya';
+		$data['success']='';
+		$data['error']='';
+		$data['menu']='';
+		if($this->input->post('save')){        	
+        	$input = array(
+        		"username" => $this->input->post('username'),
+        		"name" => $this->input->post('name'),
+				"phone" => $this->input->post('phone'),
+				"email" => $this->input->post('email')
+        	);
+        	$respo = $this->user_m->update('users','user_id',$data['user_now']->user_id,$input);
+            if($respo){
+            	$data['user_now'] = $this->user_m->get_single('users','user_id',$data['user_now']->user_id);
+                $this->session->set_userdata('kasir01',$data['user_now']);             
+                $data['success']='Ubah profile berhasil';                  
+            } else {                
+                $data['error']='Ubah profile gagal';
+            }                       
+        }
+        $data['data']=$this->user_m->get_single('users','user_id',$data['user_now']->user_id);                
+		$this->load->view('kasir/profile_v', $data);
+	}
+
+
+	public function setting(){       
+		$data=array();
+		$data['success']='';
+		$data['error']='';
+		$data['toko'] = $this->toko_m->get();
+		$data['user_now'] =  $this->session->userdata('kasir01');
+		$data['title'] = $data['toko']->nama_toko.' - Ubah Password';
+		$data['menu']='';
+
+		if($this->input->post('save')){
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('old_password', 'Password Lama', 'required');
+			$this->form_validation->set_rules('password', 'Password Baru', 'required|matches[passconf]|min_length[6]');
+			$this->form_validation->set_rules('passconf', 'Konfirmasi password', 'required');
+			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+			$this->form_validation->set_message('matches', '%s tidak sama dengan %s');
+			// $this->form_validation->set_message('valid_email', 'Alamat email tidak valid');
+			if ($this->form_validation->run() == FALSE){
+				$data['error'] = trim(validation_errors());
+			}
+		    else{
+				$cek_password=$this->user_m->cek_password($data['user_now']->user_id, md5($this->input->post('old_password')));
+		    	if($cek_password){
+		    		$ganti=$this->user_m->update('users', 'user_id', $data['user_now']->user_id, array('password'=>md5($this->input->post('password'))));
+		    		if($ganti){
+		    			$data['success']='Ubah password berhasil.';
+		    		} else {
+		    			$data['error']='Ubah password gagal';
+		    		}
+		    	} else {
+		    		$data['error']= 'Ubah password gagal. Password lama tidak cocok';
+		    	}						
+		    }
+		}
+		$this->load->view('kasir/user_setting_v', $data);
+	}
+
+
 }
 
 /* End of file dashboard.php */

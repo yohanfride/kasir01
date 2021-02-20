@@ -104,3 +104,29 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .border-bottom{
 	border-bottom: 1px solid #E4E7ED;
 }
+
+#listmenu .card{
+	border: 1px solid #9ba2b6;
+}
+
+html body {
+    background-color: #bdc3c7 !important;
+}
+
+.content-header-title{
+	color:#00ACC1 !important;
+}
+
+.breadcrumb-wrapper{
+	font-size: 15px !important;
+}
+
+form .form-control {
+    border: 2px solid #000 !important;
+}
+
+@media (max-width: 1024px) {
+	.form-control:focus{
+		margin-bottom: 20px;
+	}
+}

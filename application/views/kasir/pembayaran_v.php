@@ -31,12 +31,12 @@
          </li>
          <li class="nav-item" >
             <a href="<?= base_url();?>kasir/profil" >
-            <i class="la la-user"></i><span class="menu-title" data-i18n="nav.changelog.main">Ganti Profil</span>
+            <i class="la la-user"></i><span class="menu-title" data-i18n="nav.changelog.main">Ubah Profil</span>
             </a>
          </li>
          <li class="nav-item" >
             <a href="<?= base_url();?>kasir/setting" >
-            <i class="la la-lock"></i><span class="menu-title" data-i18n="nav.changelog.main">Ganti Password</span>
+            <i class="la la-lock"></i><span class="menu-title" data-i18n="nav.changelog.main">Ubah Password</span>
             </a>
          </li>
          <li class="navigation-header">
@@ -85,7 +85,7 @@
                         <div class="row">
                            <div class="col-md-6 mb-1">
                               <label for="firstName">No. Meja</label>
-                              <input type="text" class="form-control" id="meja" placeholder="" value="<?= $transaksi->meja?>" nama="meja">
+                              <input type="text" class="form-control" id="meja" placeholder="" value="<?= $transaksi->meja?>" name="meja">
                            </div>
                         </div>
                         <div class="">
@@ -120,8 +120,8 @@
                         </div>
                         <input type="hidden"  name="total" id="input-total">
                         <hr class="mb-1 ">
-                        <button class="btn btn-info btn-lg float-right mb-1" type="submit" id="btn-bayar" >Proses Pembayaran</button>
-                        <button class="btn btn-success btn-lg float-right mb-1" type="button" id="btn-cetak" style="display: none;" >Cetak Struk</button>
+                        <button class="btn btn-info btn-lg float-right mb-1" type="submit" id="btn-bayar" ><i class="ft ft-check-circle"></i> Proses Pembayaran</button>
+                        <button class="btn btn-success btn-lg float-right mb-1" type="button" id="btn-cetak" style="display: none;" ><i class="ft ft-printer"></i> Cetak Struk</button>
                      </form>
                   </div>
                </div>
