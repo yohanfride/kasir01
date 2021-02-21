@@ -51,9 +51,9 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>Username</th>
-                                <th>Level</th>
                                 <th>Email</th>
                                 <th>No. Telp/HP</th>
+                                <th>Level</th>
                                 <th>Status</th>
                                 <th style="width: 10%">Aksi</th>
                             </tr>
