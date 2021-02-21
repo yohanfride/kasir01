@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="content-header-right col-md-6 col-12">
-            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-md-right"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
+            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-md-right mb-1"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
         </div>
       </div>
       <div class="content-body row">
@@ -94,6 +94,10 @@
                         </div>
                         <hr class="mt-1 mb-1">
                         <h4 class="mb-1">Pembayaran</h4>
+                        <div class="mb-1">
+                            <label for="bayar">Total Transaksi</label>
+                            <input type="text" class="form-control uang" id="input-total" name='total'>
+                        </div>
                         <div class="mb-1">
                            <label for="bayar">Jumlah Bayar</label>
                            <div class="input-group">                                
@@ -118,7 +122,7 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden"  name="total" id="input-total">
+                        <input type="hidden"  name="real_total" id="input-real-total">
                         <hr class="mb-1 ">
                         <button class="btn btn-info btn-lg float-right mb-1" type="submit" id="btn-bayar" ><i class="ft ft-check-circle"></i> Proses Pembayaran</button>
                         <button class="btn btn-success btn-lg float-right mb-1" type="button" id="btn-cetak" style="display: none;" ><i class="ft ft-printer"></i> Cetak Struk</button>
@@ -160,7 +164,7 @@
                      <li class="list-group-item d-flex justify-content-between">
                         <span class="product-name success" style="font-size: 16px;">Total Pembayaran</span>
                         <span class="product-price">Rp. <?= number_format($total,0,',','.');  ?></span>
-                        <input type="hidden" id="total" value="<?= $total; ?>">
+                        <input type="hidden" id="total-true" value="<?= $total; ?>">
                      </li>
                   </ul>
                </div>
@@ -175,15 +179,17 @@
 <script src="<?= base_url()?>assets/plugins/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script>
    $(document).ready(function() {
+        $("#input-total").val($("#total-true").val());
+        $("#input-real-total").val($("#total-true").val());
         $( '.uang' ).mask('000.000.000.000.000', {reverse: true});
         $("#frm-cart").submit(function(e) {
             var bayar = $("#bayar").val();
-            var total = $("#total").val();
+            var total = $("#input-total").val();
             var bayar = (bayar.replaceAll('.', ""));
+            var total = (total.replaceAll('.', ""));
             var kembali = bayar - total;
-            $("#input-total").val(total);
             if(total == 0){
-                swal('Menu Kosong','Belum ada menu yang dipilih','warning');
+                swal('Total Transkasi Kosong','Masukkan jumlah total transaksi','warning');
                 return false;
             } else if(kembali<0){
                 swal('Pembayaran Kurang','Jumlah pembayaran kurang dari total transaksi','warning');
@@ -237,8 +243,9 @@
         });
         $("#bayar").keyup(function(){
             var bayar = $("#bayar").val();
-            var total = $("#total").val();
+            var total = $("#input-total").val();
             var bayar = (bayar.replaceAll('.', ""));
+            var total = (total.replaceAll('.', ""));
             var kembali = bayar - total;
             $("#kembali").val(Number((kembali).toFixed(1)).toLocaleString());
         });
@@ -247,7 +254,8 @@
         });
    });
    function gettotal(){
-      var total = $("#total").val();
+      var total = $("#input-total").val();
+      total = (total.replaceAll('.', ""));
       total = parseInt(total);
       total = Number((total).toFixed(1)).toLocaleString();
       $("#bayar").val(total);

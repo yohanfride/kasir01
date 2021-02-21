@@ -71,7 +71,7 @@
             </div>
          </div>
          <div class="content-header-right col-md-6 col-12">
-            <a href="<?= base_url()?>riwayat"><button class="btn btn-info box-shadow-2 px-2 float-md-right"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
+            <a href="<?= base_url()?>riwayat"><button class="btn btn-info box-shadow-2 px-2 float-md-right mb-1"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
          </div>
       	</div>
       	<div class="content-body row">
@@ -79,20 +79,20 @@
         		<div class="card">
 		            <div class="card-content">
 		               <div class="card-body">
-		                  <div class="d-flex justify-content-around lh-condensed">
-		                     <div class="order-details text-center">
+		                  <div class="row justify-content-around lh-condensed">
+		                     <div class="order-details text-center col-md-3 col-6 mb-1 mt-1">
 		                        <div class="order-title">No. Faktur</div>
 		                        <div class="order-info"><?= $transaksi->faktur?></div>
 		                     </div>
-		                     <div class="order-details text-center">
+		                     <div class="order-details text-center col-md-3 col-6 mb-1 mt-1">
 		                        <div class="order-title">Tanggal & Waktu</div>
 		                        <div class="order-info"><?= date_format(date_create($transaksi->date_add), 'd-m-Y H:i'); ?></div>
 		                     </div>
-		                     <div class="order-details text-center">
-		                        <div class="order-title">Total</div>
+		                     <div class="order-details text-center col-md-3 col-6 mb-1 mt-1">
+		                        <div class="order-title">Total Transaksi</div>
 		                        <div class="order-info">Rp. <?= number_format($transaksi->total,0,',','.');  ?></div>
 		                     </div>
-		                     <div class="order-details text-center">
+		                     <div class="order-details text-center col-md-3 col-6 mb-1 mt-1">
 		                        <div class="order-title">Metode Pembayaran</div>
 		                        <div class="order-info"><?= $transaksi->metode_bayar ?></div>
 		                     </div>
@@ -159,7 +159,6 @@
 		                        </div>
 		                        <span class="text-muted"><?= $transaksi->catatan?></span>
 	                     	</li>
-	                     
 		                    <li class="list-group-item d-flex justify-content-between">
 		                        <span class="product-name success" style="font-size: 16px;">Jumlah Pembayaran</span>
 		                        <span class="product-price">Rp. <?= number_format($transaksi->bayar,0,',','.');  ?></span>
@@ -168,10 +167,10 @@
 		                        <span class="product-name success" style="font-size: 16px;">Kembali</span>
 		                        <span class="product-price">Rp. <?= number_format($transaksi->bayar - $transaksi->total,0,',','.');  ?></span>
 		                    </li>
+		                    <li class="list-group-item justify-content-between">
+		                        <button class="btn btn-success btn-lg mb-1 float-right" type="button" onclick="ajax_print('<?= $transaksi->faktur;?>')" ><i class="ft ft-printer"></i> Cetak Struk</button>
+		                    </li>
 	                  	</ul>
-	               </div>
-	               <div class="card-footer">
-	               		<button class="btn btn-success btn-lg mb-1 float-right" type="button" onclick="ajax_print('<?= $transaksi->faktur;?>')" ><i class="ft ft-printer"></i> Cetak Struk</button>
 	               </div>
 	            </div>
 	         </div>

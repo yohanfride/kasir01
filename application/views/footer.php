@@ -35,7 +35,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                &copy; 2021 Delta Web Dev
+                &copy; 2021 Delta Digital ID
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -61,7 +61,7 @@
     <!--Wave Effects -->
     <!-- <script src="<?= base_url()?>assets/js/waves.js"></script> -->
     <!--Menu sidebar -->
-    <!-- <script src="<?= base_url()?>assets/js/sidebarmenu.js"></script> -->
+    <script src="<?= base_url()?>assets/js/sidebarmenu.js"></script>
     <!--stickey kit -->
     <script src="<?= base_url()?>assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <script src="<?= base_url()?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>

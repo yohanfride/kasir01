@@ -23,7 +23,7 @@
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/style.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/ecommerce-shop.min.css">
       <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/kasir/assets/css/ecommerce-cart.min.css">
-      <link href="<?= base_url()?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
       <!-- END Custom CSS-->
    </head>
    <body class="vertical-layout vertical-menu 2-columns pace-done menu-collapsed fixed-navbar"

@@ -144,6 +144,7 @@ class kasir extends CI_Controller {
     		"faktur" => $data['transaksi']->faktur,
     		"total" => preg_replace("/[^0-9 ]/", "", $this->input->post('total') ),
     		"bayar" => preg_replace("/[^0-9 ]/", "", $this->input->post('bayar') ),
+    		"real_total" => preg_replace("/[^0-9 ]/", "", $this->input->post('real_total') ),
     		"status_bayar" => 1,
 			"catatan" => $this->input->post('catatan'),
 			"meja" => $this->input->post('meja'),

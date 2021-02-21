@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="content-header-right col-md-6 col-12">
-            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-md-right"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
+            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-md-right mb-1"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
         </div>
       </div>
       <div class="content-body row">
