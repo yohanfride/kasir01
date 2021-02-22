@@ -178,6 +178,16 @@
 <script src="<?= base_url()?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 <script src="<?= base_url()?>assets/plugins/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script>
+    Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+      var n = this,
+          decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+          decSeparator = decSeparator == undefined ? "." : decSeparator,
+          thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+          sign = n < 0 ? "-" : "",
+          i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+          j = (j = i.length) > 3 ? j % 3 : 0;
+      return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+    };
    $(document).ready(function() {
         $("#input-total").val($("#total-true").val());
         $("#input-real-total").val($("#total-true").val());
@@ -247,7 +257,7 @@
             var bayar = (bayar.replaceAll('.', ""));
             var total = (total.replaceAll('.', ""));
             var kembali = bayar - total;
-            $("#kembali").val(Number((kembali).toFixed(1)).toLocaleString());
+            $("#kembali").val(kembali.formatMoney(0,'.',','));
         });
         $("#btn-cetak").click(function(){
           ajax_print('<?= base_url()?>cetak/ajax_transkasi/<?= $transaksi->faktur; ?>');
@@ -257,7 +267,7 @@
       var total = $("#input-total").val();
       total = (total.replaceAll('.', ""));
       total = parseInt(total);
-      total = Number((total).toFixed(1)).toLocaleString();
+      total = total.formatMoney(0,'.',',');
       $("#bayar").val(total);
       $("#bayar").keyup();
    }

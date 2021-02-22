@@ -2,7 +2,6 @@
 
         Options +FollowSymLinks
         RewriteEngine on
-
         # Send request via index.php (again, not if its a real file or folder)
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
@@ -16,3 +15,9 @@
         </IfModule>
 
 </IfModule> 
+
+#http to https
+ 
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
