@@ -28,6 +28,7 @@ class item{
             $leftCols2 = $leftCols / 2 - $rightCols / 2;
         }
         $price = number_format($this->price,0,'.',','); 
+        $sign = ($this->dollarSign ? 'Rp. ' : '');
         $left2 = str_pad($this->qty.' x '.$sign.$price, $leftCols2);
         $total = number_format($this->total,0,'.',','); 
 

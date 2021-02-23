@@ -64,7 +64,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="note">Catatan (Footer) Struk </label>
-                                        <textarea class="form-control" rows="3" id="note" name="note" ><?= $data->footer_struk; ?></textarea>
+                                        <textarea class="form-control" rows="5" id="note" name="note" ><?= $data->footer_struk; ?></textarea>
+                                        <span class="text-danger float-right text-right">*1 baris terdiri maksimal 30 huruf, gunakan enter untuk ke baris berikutnya.</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
@@ -95,9 +96,11 @@
                                         ?>
                                         <input type="hidden" name="icon_curr" value="<?= $foto_name?>">
                                         <input type="file" id="input-file-now-custom-1" name="icon" class="dropify" data-default-file="<?= $foto_url ?>" accept="icon/*" />
+                                        <span class="text-danger ml-2 float-right text-right">*Gunakan online conveter untuk menghubah gambar menjadi .ico</span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="file">Logo Struk</label>
+                                        <label for="file">Logo Struk </label>
+                                        <span class="text-danger ml-2 float-right">*Tinggi gambar maksimal 400px</span>
                                         <?php  
                                             if($data->logo_struk){
                                                 $foto_name = $data->logo_struk;
