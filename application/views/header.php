@@ -50,6 +50,9 @@
     <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
     <link href="<?= base_url();?>assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="<?= base_url();?>assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="<?= base_url();?>assets/plugins/morrisjs/morris.css" rel="stylesheet">
     <?php } ?>
     <!-- <link href="<?= base_url();?>assets/plugins/croppie/croppie.css" rel="stylesheet"> -->
     

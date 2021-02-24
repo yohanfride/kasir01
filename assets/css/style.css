@@ -2432,9 +2432,9 @@ Dashboard1 chart
 .amp-pxl {
   position: relative; }
   .amp-pxl .ct-series-a .ct-bar {
-    stroke: #1976d2; }
+    stroke: #26dad2; /*#1976d2;*/ }
   .amp-pxl .ct-series-b .ct-bar {
-    stroke: #26dad2; }
+    stroke: #ef5350; /*#26dad2;*/  }
 
 .c3-chart-arcs-title,
 .c3-legend-item {

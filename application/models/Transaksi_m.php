@@ -77,7 +77,7 @@ class transaksi_m extends My_Model{
 	}
 
 	function search_daily($awal,$akhir){
-		$sql = "SELECT date(a.date_add) as tanggal, SUM(total) as total from penjualan a WHERE a.status_bayar = 1  
+		$sql = "SELECT date(a.date_add) as tanggal, SUM(total) as total, COUNT(faktur) as jumlah from penjualan a WHERE a.status_bayar = 1  
 				AND a.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59' 
 				GROUP BY date(a.date_add) ORDER by date_add ASC ";
 		$res = $this->db->query($sql);
@@ -160,6 +160,20 @@ class transaksi_m extends My_Model{
 				JOIN penjualan b ON a.faktur = b.faktur JOIN menu c ON a.idmenu = c.idmenu
 				WHERE b.status_bayar = 1  AND b.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59' AND c.idmenu = $menu
 				GROUP BY date(b.date_add) ORDER by tanggal ASC ";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
+
+	function search_fav_menu($awal,$akhir,$kat="",$lim=10){
+		$sql = "SELECT c.*, d.*, SUM(a.harga * a.jumlah) as total, SUM( a.jumlah) as jumlah from item_penjualan a 
+				JOIN penjualan b ON a.faktur = b.faktur JOIN menu c on a.idmenu = c.idmenu join kategori d ON c.idkategori = d.idkategori 
+				WHERE b.status_bayar = 1  AND b.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59'"; 		
+		if($kat){
+			$sql.= " AND c.idkategori = $kat ";
+		}
+		$sql.= " GROUP BY a.idmenu ORDER BY jumlah DESC LIMIT 0,$lim";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
