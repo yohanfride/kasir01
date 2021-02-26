@@ -109,6 +109,18 @@
                 <h4 class="card-title" id="gtitle">Grafik Rekapitulasi Penjualan Harian</h4>
                 <div id="morris-line-chart" class=""></div>
             </div>
+            <?php if($data){ ?>
+            <div class="card-footer">
+                <div class="mt-1 float-right">
+                    <a href="<?= base_url()?>report/penjualan/cetak/?<?= $params?>" target="_BLANK">
+                        <button class="btn btn-info" type="button" style="width: 120px; margin-top: -5px;"><i class="fa fa-print"></i>  Cetak</button>
+                    </a>
+                    <a href="<?= base_url()?>excel/penjualan/?<?= $params?>" target="_BLANK">
+                        <button class="btn btn-success" type="button" style="margin-top: -5px;"><i class="fa fa-file-excel-o"></i>  Export Excel</button>
+                    </a>
+                </div>  
+            </div>
+            <?php } ?>
         </div>
     </div>
 

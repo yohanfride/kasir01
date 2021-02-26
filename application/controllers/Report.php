@@ -30,7 +30,7 @@ class report extends CI_Controller {
 	    return $randomString; 
 	} 
 
-	public function penjualan(){        
+	public function penjualan($cetak=""){        
 		$data=array();
 		$data['toko'] = $this->toko_m->get();
 		$data['user_now'] =  $this->session->userdata('kasir01');
@@ -87,16 +87,21 @@ class report extends CI_Controller {
 			'menu' => $data['menu']
 		);
 		$this->session->set_userdata('lastparams',$last_params);
+
 		/////
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
 		// exit();
-
-		$this->load->view('report_penjualan_v', $data);
+		if(empty($cetak)){
+			$this->load->view('report_penjualan_v', $data);
+		} else {
+			$data['title'].= " Cetak PDF";
+			$this->load->view('pdf/report_penjualan_pdf_v', $data);
+		}
 	}
 
-	public function pembelian(){        
+	public function pembelian($cetak = ""){        
 		$data=array();
 		$data['toko'] = $this->toko_m->get();
 		$data['user_now'] =  $this->session->userdata('kasir01');
@@ -151,11 +156,15 @@ class report extends CI_Controller {
 		// print_r($data);
 		// echo "</pre>";
 		// exit();
-
-		$this->load->view('report_pembelian_v', $data);
+		if(empty($cetak)){
+			$this->load->view('report_pembelian_v', $data);
+		} else {
+			$data['title'].= " Cetak PDF";
+			$this->load->view('pdf/report_pembelian_pdf_v', $data);
+		}
 	}
 
-	public function cashflow(){        
+	public function cashflow($cetak = ""){        
 		$data=array();
 		$data['toko'] = $this->toko_m->get();
 		$data['user_now'] =  $this->session->userdata('kasir01');
@@ -225,7 +234,12 @@ class report extends CI_Controller {
 		// print_r($data);
 		// echo "</pre>";
 		// exit();
-		$this->load->view('report_cashflow_v', $data);
+		if(empty($cetak)){
+			$this->load->view('report_cashflow_v', $data);
+		} else {
+			$data['title'].= " Cetak PDF";
+			$this->load->view('pdf/report_cashflow_pdf_v', $data);
+		}
 	}
 }
 

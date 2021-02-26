@@ -96,10 +96,21 @@ class transaksi_m extends My_Model{
 		return $r;
 	}
 
+	function search_week2($awal,$akhir){
+		$sql = "SELECT week(a.date_add) AS minggu, year(a.date_add) as tahun,
+				SUM(total) as total, COUNT(faktur) as jumlah from penjualan a WHERE a.status_bayar = 1  
+				AND a.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59' 
+				GROUP BY week(a.date_add) ORDER by date_add ASC ";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
+
 	function search_month($year){
-		$sql = " SELECT IFNULL(total, 0) AS item_total, c.id as bulan FROM bulan c LEFT JOIN 
-			( SELECT month(a.date_add) AS bulan, SUM(total) as total, year(a.date_add) AS tahun from penjualan a 
-			WHERE a.status_bayar = 1  AND year(a.date_add) = '$year' 
+		$sql = " SELECT IFNULL(total, 0) AS item_total, c.id as bulan, IFNULL(jumlah, 0) AS item_jumlah FROM bulan c LEFT JOIN 
+			( SELECT month(a.date_add) AS bulan, SUM(total) as total, COUNT(faktur) as jumlah,
+			year(a.date_add) AS tahun from penjualan a WHERE a.status_bayar = 1  AND year(a.date_add) = '$year' 
 			GROUP BY month(a.date_add) ORDER by bulan ASC ) b ON b.bulan = c.id";
 		$res = $this->db->query($sql);
 		$r=$res->result();
@@ -174,6 +185,35 @@ class transaksi_m extends My_Model{
 			$sql.= " AND c.idkategori = $kat ";
 		}
 		$sql.= " GROUP BY a.idmenu ORDER BY jumlah DESC LIMIT 0,$lim";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
+
+	function search_all($awal,$akhir,$status_bayar=""){
+		$sql = "SELECT * from penjualan a WHERE a.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59' ";
+		if($status_bayar != ''){
+			$sql.= " AND a.status_bayar = $status_bayar ";
+		}
+		$sql.= " ORDER by date_add ASC";
+		$res = $this->db->query($sql);
+		$r=$res->result();
+		$res->free_result();
+		return $r;
+	}
+
+	function search_all_item($awal,$akhir,$order="tanggal ASC",$kat="",$menu=""){
+		$sql = "SELECT a.*,b.date_add,c.menu,d.kategori from item_penjualan a JOIN penjualan b ON a.faktur = b.faktur 
+				JOIN menu c ON a.idmenu = c.idmenu JOIN kategori d on c.idkategori = d.idkategori
+				WHERE b.status_bayar = 1  AND b.date_add BETWEEN '$awal 00:00:00' AND '$akhir 23:59:59'";
+		if($menu != ''){
+			$sql.= " AND a.idmenu = $menu ";
+		}
+		if($kat != ''){
+			$sql.= " AND c.idkategori = $kat ";
+		}
+		$sql.= " ORDER by $order ";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
