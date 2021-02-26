@@ -948,7 +948,7 @@ class Excel extends CI_Controller {
     	$data = $this->pembelian_m->search_all($str,$end,1);
     	$excel = new PHPExcel();
     	$title = "Laporan Pembelian Mingguan - ".$nama_toko." tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)));
-    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Pembelian Mingguan","Data Transaksi");
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Pembelian Mingguan","Data Pembelian");
 		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Pembelian Mingguan - ".$nama_toko); 
 		$excel->getActiveSheet()->mergeCells('A1:F1'); 
 		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
@@ -1043,7 +1043,7 @@ class Excel extends CI_Controller {
 
     	$excel = new PHPExcel();
     	$title = "Laporan Pembelian Bulanan - ".$nama_toko." Tahun ".$year;
-    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Pembelian Bulanan","Data Transaksi");
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Pembelian Bulanan","Data Pembelian");
 		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Pembelian Bulanan - ".$nama_toko); 
 		$excel->getActiveSheet()->mergeCells('A1:F1'); 
 		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
@@ -1405,6 +1405,650 @@ class Excel extends CI_Controller {
 		}
 	}
 
+	//////////// CASHFLOW /////////////
+
+	function data_cashflow(&$excel,$data,$str,$end,$akun=""){
+		$excel->getActiveSheet()->mergeCells('A1:G1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)))); 
+		$excel->getActiveSheet()->mergeCells('A2:G2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		
+		if( !empty($akun) ){
+			$subtitle = " Akun : ".$akun;
+			$excel->getActiveSheet()->setCellValue('A3',$subtitle); 
+			$excel->getActiveSheet()->mergeCells('A3:G3'); 
+			$excel->getActiveSheet()->getStyle('A3')->getFont()->setBold(TRUE); 
+			$excel->getActiveSheet()->getStyle('A3')->getFont()->setSize(14); 
+			$excel->getActiveSheet()->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 	
+		}
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "TANGGAL");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "FAKTUR TRANSAKSI");
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "NAMA AKUN"); 
+		$excel->getActiveSheet()->setCellValue('E'.$coltitle, "JENIS"); 
+		$excel->getActiveSheet()->setCellValue('F'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('G'.$coltitle, "PENGELUARAN"); 
+
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('G'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->setTitle("Data Cashflow");
+
+		$debit=0;
+		$kredit=0;
+		$numrow = 5;
+		$no=1;
+		foreach ($data as $d) {
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, PHPExcel_Shared_Date::PHPToExcel($this->convert_date( $d->tanggal ) ) );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->faktur);
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->nama_akun);
+			$excel->getActiveSheet()->setCellValue('E'.$numrow, $d->jenis);
+			$excel->getActiveSheet()->setCellValue('F'.$numrow, $d->debit);
+			$excel->getActiveSheet()->setCellValue('G'.$numrow, $d->kredit);
+
+			// Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$debit+=$d->debit;
+			$kredit+=$d->kredit;
+		}
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'E'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('F'.$numrow, $debit);
+		$excel->getActiveSheet()->setCellValue('G'.$numrow, $kredit);
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($this->style_col);
+		
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'E'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('F'.$numrow, ( $debit - $kredit) );
+		$excel->getActiveSheet()->mergeCells('F'.$numrow.':'.'G'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($this->style_col);
+
+		
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+
+		$excel = $this->setformat($excel,'F4:F'.$numrow);
+		$excel = $this->setformat($excel,'G4:G'.$numrow);
+		$excel = $this->setformat($excel,'B4:B'.$numrow,'yyyy-mm-dd');
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet()->setTitle("Data Cashflow");
+	}
+
+	function cashflow_daily($nama_toko,$str,$end,$jenis=""){
+		$rekap = $this->cashflow_m->search_daily($str,$end);
+    	$data = $this->cashflow_m->search_all($str,$end,'tanggal ASC');
+    	$excel = new PHPExcel();
+    	$title = "Laporan Cashflow Harian - ".$nama_toko." tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)));
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Cashflow Harian","Data Cashflow");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Cashflow Harian - ".$nama_toko); 
+		$excel->getActiveSheet()->mergeCells('A1:D1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)))); 
+		$excel->getActiveSheet()->mergeCells('A2:D2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "TANGGAL");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "PENGELUARAN"); 
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$pemasukan = 0;
+		$pengeluaran = 0;
+		foreach ($rekap as $d) {
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, PHPExcel_Shared_Date::PHPToExcel( $this->convert_date( $d->tanggal ) ) );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->pemasukan);
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->pengeluaran);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$pemasukan+=$d->pemasukan;
+			$pengeluaran+=$d->pengeluaran;
+		}
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, $pemasukan);
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, $pengeluaran);
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, ($pemasukan-$pengeluaran) );
+		$excel->getActiveSheet()->mergeCells('C'.$numrow.':'.'D'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel = $this->setformat($excel,'C4:C'.$numrow);
+		$excel = $this->setformat($excel,'D4:D'.$numrow);
+		$excel = $this->setformat($excel,'B4:B'.$numrow,'yyyy-mm-dd');
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekap Data Cashflow Harian");
+    	
+    	//Detail Data//
+    	$excel->createSheet(1);
+		$excel->setActiveSheetIndex(1)->setCellValue('A1', "Data Cashflow - ".$nama_toko); 
+		$this->data_cashflow($excel,$data,$str,$end);
+		$excel->setActiveSheetIndex(0);
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
+		exit();		
+	}
+
+	function cashflow_week($nama_toko,$str,$end,$jenis=""){
+    	$rekap = $this->cashflow_m->search_week2($str,$end);
+    	$data = $this->cashflow_m->search_all($str,$end,' tanggal ASC ');
+    	$excel = new PHPExcel();
+    	$title = "Laporan Cashflow Mingguan - ".$nama_toko." tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)));
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Cashflow Mingguan","Data Cashflow");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Cashflow Mingguan - ".$nama_toko); 
+		$excel->getActiveSheet()->mergeCells('A1:F1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)))); 
+		$excel->getActiveSheet()->mergeCells('A2:F2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "TAHUN");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "MINGGU");
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "TANGGAL");
+		$excel->getActiveSheet()->setCellValue('E'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('F'.$coltitle, "PENGELUARAN"); 
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$pemasukan = 0;
+		$pengeluaran = 0;
+		foreach ($rekap as $d) {
+			$minggu = $this->getStartAndEndDate($d->minggu, $d->tahun);
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, $d->tahun );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->minggu );
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $minggu['week_start'].' - '.$minggu['week_end'] );
+			$excel->getActiveSheet()->setCellValue('E'.$numrow, $d->pemasukan);
+			$excel->getActiveSheet()->setCellValue('F'.$numrow, $d->pengeluaran);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$pemasukan+=$d->pemasukan;
+			$pengeluaran+=$d->pengeluaran;
+		}
+
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'D'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('E'.$numrow, $pemasukan);
+		$excel->getActiveSheet()->setCellValue('F'.$numrow, $pengeluaran);
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_col);
+
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'D'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('E'.$numrow, ($pemasukan-$pengeluaran) );
+		$excel->getActiveSheet()->mergeCells('E'.$numrow.':'.'F'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_col);
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+		$excel = $this->setformat($excel,'E4:E'.$numrow);
+		$excel = $this->setformat($excel,'F4:F'.$numrow);
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekap Data Cashflow Mingguan");
+    	
+    	//Detail Data//
+    	$excel->createSheet(1);
+		$excel->setActiveSheetIndex(1)->setCellValue('A1', "Data Cashflow - ".$nama_toko); 
+		$this->data_cashflow($excel,$data,$str,$end);
+		$excel->setActiveSheetIndex(0);
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
+		exit();	
+    }
+
+    function cashflow_month($nama_toko,$year,$jenis=""){
+    	$rekap = $this->cashflow_m->search_month($year);
+
+    	$excel = new PHPExcel();
+    	$title = "Laporan Cashflow Bulanan - ".$nama_toko." Tahun ".$year;
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Cashflow Bulanan","Data Cashflow");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Cashflow Bulanan - ".$nama_toko); 
+		$excel->getActiveSheet()->mergeCells('A1:F1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tahun ".$year); 
+		$excel->getActiveSheet()->mergeCells('A2:F2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "TAHUN");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "BULAN");
+		$excel->getActiveSheet()->setCellValue('E'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('F'.$coltitle, "PENGELUARAN"); 
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$pemasukan = 0;
+		$pengeluaran = 0;
+		foreach ($rekap as $d) {
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, $year );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->bulan );
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->pemasukan );
+			$excel->getActiveSheet()->setCellValue('E'.$numrow, $d->pengeluaran);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$pemasukan+=$d->pemasukan;
+			$pengeluaran+=$d->pengeluaran;
+		}
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'C'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, $pemasukan);
+		$excel->getActiveSheet()->setCellValue('E'.$numrow, $pengeluaran);
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'C'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, ($pemasukan-$pengeluaran) );
+		$excel->getActiveSheet()->mergeCells('D'.$numrow.':'.'E'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$excel = $this->setformat($excel,'D4:D'.$numrow);
+		$excel = $this->setformat($excel,'E4:E'.$numrow);
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekap Data Cashflow Bulanan");
+		$excel->setActiveSheetIndex(0);
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
+		exit();	
+    }
+
+    function cashflow_akun($nama_toko,$str,$end,$jenis=""){
+    	$rekap = $this->cashflow_m->search_akun($str,$end);
+    	$data = $this->cashflow_m->search_all($str,$end,' tanggal ASC ');
+
+    	$excel = new PHPExcel();
+    	$title = "Laporan Cashflow per Bahan - ".$nama_toko." tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)));
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Cashflow per Bahan","Data Cashflow");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Cashflow per Bahan - ".$nama_toko); 
+		$excel->getActiveSheet()->mergeCells('A1:F1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)))); 
+		$excel->getActiveSheet()->mergeCells('A2:F2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "AKUN");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "PENGELUARAN"); 
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$pemasukan = 0;
+		$pengeluaran = 0;
+		foreach ($rekap as $d) {
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, $d->akun);
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->pemasukan);
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->pengeluaran);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$pemasukan+=$d->pemasukan;
+			$pengeluaran+=$d->pengeluaran;
+		}
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, $pemasukan);
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, $pengeluaran);
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, ($pemasukan-$pengeluaran) );
+		$excel->getActiveSheet()->mergeCells('C'.$numrow.':'.'D'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel = $this->setformat($excel,'C4:C'.$numrow);
+		$excel = $this->setformat($excel,'D4:D'.$numrow);
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekap per Akun");
+    	
+    	//Detail Data//
+    	$excel->createSheet(1);
+		$excel->setActiveSheetIndex(1)->setCellValue('A1', "Data Cashflow - ".$nama_toko); 
+		$this->data_cashflow($excel,$data,$str,$end);
+		$excel->setActiveSheetIndex(0);
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
+		exit();	
+    }
+
+    function cashflow_akun_daily($nama_toko,$str,$end,$akun="",$jenis=""){
+    	$excel = new PHPExcel();
+    	$bahan = '';
+		$subtitle = "";
+		$title = "";
+		if($akun != ''){
+    		$rekap = $this->cashflow_m->search_akun_daily($str,$end,$akun);
+    		$data = $this->cashflow_m->search_all($str,$end,' tanggal ASC ',$akun);
+			$subtitle .= " Akun : ".$akun;
+			$title = " (Akun - $akun) ";
+		}
+
+    	$title = "Laporan Akun Cashflow Harian - $title - ".$nama_toko." tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)));
+    	$excel = $this->excelTitle($excel,$nama_toko,$title,"Laporan Akun Cashflow Harian","Data Cashflow");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekap Akun Cashflow Harian - ".$nama_toko); 
+		$excel->getActiveSheet()->mergeCells('A1:D1'); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Tanggal ".(date("d-m-Y",strtotime($str)))." sd ".(date("d-m-Y",strtotime($end)))); 
+		$excel->getActiveSheet()->mergeCells('A2:D2'); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$excel->getActiveSheet()->setCellValue('A3',$subtitle); 
+		$excel->getActiveSheet()->mergeCells('A3:D3'); 
+		$excel->getActiveSheet()->getStyle('A3')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A3')->getFont()->setSize(14); 
+		$excel->getActiveSheet()->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 	
+		
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "NO"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "TANGGAL");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "PEMASUKAN"); 
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "PENGELUARAN"); 
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$pemasukan = 0;
+		$pengeluaran = 0;
+		foreach ($rekap as $d) {
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, PHPExcel_Shared_Date::PHPToExcel( $this->convert_date( $d->tanggal ) ) );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->pemasukan);
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->pengeluaran);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$pemasukan+=$d->pemasukan;
+			$pengeluaran+=$d->pengeluaran;
+		}
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, $pemasukan);
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, $pengeluaran);
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+
+		$numrow++;
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'TOTAL (PEMASUKAN - PENGELUARAN)');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'B'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('C'.$numrow, ($pemasukan-$pengeluaran) );
+		$excel->getActiveSheet()->mergeCells('C'.$numrow.':'.'D'.$numrow); 
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel = $this->setformat($excel,'C4:C'.$numrow);
+		$excel = $this->setformat($excel,'D4:D'.$numrow);
+		$excel = $this->setformat($excel,'B4:B'.$numrow,'yyyy-mm-dd');
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekap per Tanggal");
+    	
+    	//Detail Data//
+    	$excel->createSheet(1);
+		$excel->setActiveSheetIndex(1)->setCellValue('A1', "Data Cashflow - ".$nama_toko); 
+		if($akun != ''){
+			$this->data_cashflow($excel,$data,$str,$end,$akun);
+		}
+		$excel->setActiveSheetIndex(0);
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
+		exit();	
+    }
+
+	public function cashflow(){        
+		$data=array();
+		$data['toko'] = $this->toko_m->get();
+		$data['user_now'] =  $this->session->userdata('kasir01');
+		$data['menu']='laporan-cashflow';
+		$data['tipe']='1';
+		$data['str_date'] = date("Y-m-d");
+		$data['end_date'] = date("Y-m-d");
+		if($this->input->get('str')){
+			$data['str_date'] = $this->input->get('str');
+		}
+		if($this->input->get('end')){
+			$data['end_date'] = $this->input->get('end');
+		}
+		if($this->input->get('tipe')){
+			$data['tipe'] = $this->input->get('tipe');
+		}
+		$data['jenis'] = $this->input->get('jenis');
+		$data['tahun'] = $this->input->get('tahun');
+		$data['akun'] = $this->input->get('akun');
+		if($data['tipe'] == '1'){
+			$data['data'] = $this->cashflow_daily($data['toko']->nama_toko,$data['str_date'],$data['end_date'],$data['jenis']);
+		}
+		if($data['tipe'] == '2'){
+			$data['data'] = $this->cashflow_week($data['toko']->nama_toko,$data['str_date'],$data['end_date'],$data['jenis']);
+		}
+		if($data['tipe'] == '3'){
+			$data['data'] = $this->cashflow_month($data['toko']->nama_toko,$data['tahun'],$data['jenis']);
+		}
+		if($data['tipe'] == '4'){
+			$data['data'] = $this->cashflow_akun($data['toko']->nama_toko,$data['str_date'],$data['end_date'],$data['jenis']);
+		}
+		if($data['tipe'] == '5'){
+			$data['data'] = $this->cashflow_akun_daily($data['toko']->nama_toko,$data['str_date'],$data['end_date'],$data['akun'],$data['jenis']);
+		}
+	}
 }
 
 /* End of file dashboard.php */

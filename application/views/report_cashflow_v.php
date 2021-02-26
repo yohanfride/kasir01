@@ -56,10 +56,10 @@
                 <h3 class="card-title">Form Pencarian Data</h3>
             </div>    
             <div class="card-body row">
-                <div class="col-md-3 col-sm-6 div-src" id="div-bahan">
+                <div class="col-md-3 col-sm-6 div-src" id="div-akun">
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label" style="margin-bottom: .75rem">Bahan</label>
-                        <select class="select2 form-control custom-select" name="bahan" id="bahan" style="width: 100%; height:36px;" required>
+                        <label for="recipient-name" class="control-label" style="margin-bottom: .75rem">Akun</label>
+                        <select class="select2 form-control custom-select" name="akun" id="akun" style="width: 100%; height:36px;" required>
                             <?php foreach ($list_akun as $d) { ?>
                             <option value="<?= $d->akun ?>" <?= ($akun==$d->akun)?'selected':''; ?> ><?= $d->akun ?></option>
                             <?php } ?>
@@ -145,9 +145,9 @@
     function formcari(id){
         $("#div-tgl-mulai").css({"display":"none"});    
         $("#div-tgl-akhir").css({"display":"none"});    
-        $("#div-bahan").css({"display":"none"});    
+        $("#div-akun").css({"display":"none"});    
         $("#div-tahun").css({"display":"none"});    
-        $('#bahan').select2("enable", false);
+        $('#akun').select2("enable", false);
         $(".frm-input").prop('disabled', true);
         if( (id != '3') ){
             $("#div-tgl-mulai").css({"display":"block"});    
@@ -160,8 +160,8 @@
             $("#tahun").prop('disabled', false);
         }
         if( id == '5' ){
-            $("#div-bahan").css({"display":"block"});    
-            $('#bahan').select2("enable");
+            $("#div-akun").css({"display":"block"});    
+            $('#akun').select2("enable");
         }
     }
 </script>
@@ -256,7 +256,7 @@
                 resize: true
             });
 
-            $("#gtitle").html("Grafik Rekapitulasi Total <i>Cashflow</i> per Bahan <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
+            $("#gtitle").html("Grafik Rekapitulasi Total <i>Cashflow</i> per Akun <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
         <?php } ?>
 
         <?php if($tipe == 5){ ?>
@@ -272,8 +272,8 @@
               lineWidth: 1,
               hideHover: 'auto'
             });
-            var bahan = $("#select2-bahan-container").html();
-            $("#gtitle").html("Grafik Rekapitulasi <i>Cashflow</i> Harian Bahan: <b>"+bahan+"</b> <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
+            var akun = $("#select2-akun-container").html();
+            $("#gtitle").html("Grafik Rekapitulasi <i>Cashflow</i> Harian Akun: <b>"+akun+"</b> <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
         <?php } ?>
 
         var heightToAdd = 80;    

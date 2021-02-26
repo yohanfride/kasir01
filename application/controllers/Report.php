@@ -201,7 +201,7 @@ class report extends CI_Controller {
 			$data['data'] = $this->cashflow_m->search_akun($data['str_date'],$data['end_date'],$data['jenis']);
 		}
 		if($data['tipe'] == '5'){
-			$data['data'] = $this->cashflow_m->search_akun_daily($data['str_date'],$data['end_date'],$data['bahan'],$data['jenis']);
+			$data['data'] = $this->cashflow_m->search_akun_daily($data['str_date'],$data['end_date'],$data['akun'],$data['jenis']);
 		}
 
 		$data['list_tahun'] = $this->cashflow_m->get_tahun();
