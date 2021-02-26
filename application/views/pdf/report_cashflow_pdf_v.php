@@ -1,4 +1,4 @@
-<?php include("header.php") ?>
+f<?php include("header.php") ?>
 
     <h2 class="card-title text-center" id="gtitle">Grafik Rekapitulasi Penjualan Harian</h2>
     <div class="col-md-12">
@@ -35,9 +35,9 @@
     function formcari(id){
         $("#div-tgl-mulai").css({"display":"none"});    
         $("#div-tgl-akhir").css({"display":"none"});    
-        $("#div-bahan").css({"display":"none"});    
+        $("#div-akun").css({"display":"none"});    
         $("#div-tahun").css({"display":"none"});    
-        $('#bahan').select2("enable", false);
+        $('#akun').select2("enable", false);
         $(".frm-input").prop('disabled', true);
         if( (id != '3') ){
             $("#div-tgl-mulai").css({"display":"block"});    
@@ -50,8 +50,8 @@
             $("#tahun").prop('disabled', false);
         }
         if( id == '5' ){
-            $("#div-bahan").css({"display":"block"});    
-            $('#bahan').select2("enable");
+            $("#div-akun").css({"display":"block"});    
+            $('#akun').select2("enable");
         }
     }
 </script>
@@ -146,7 +146,7 @@
                 resize: true
             });
 
-            $("#gtitle").html("Grafik Rekapitulasi Total <i>Cashflow</i> per Bahan <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
+            $("#gtitle").html("Grafik Rekapitulasi Total <i>Cashflow</i> per Akun <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
         <?php } ?>
 
         <?php if($tipe == 5){ ?>
@@ -162,8 +162,8 @@
               lineWidth: 1,
               hideHover: 'auto'
             });
-            var bahan = $("#select2-bahan-container").html();
-            $("#gtitle").html("Grafik Rekapitulasi <i>Cashflow</i> Harian Bahan: <b>"+bahan+"</b> <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
+            var akun = $("#select2-akun-container").html();
+            $("#gtitle").html("Grafik Rekapitulasi <i>Cashflow</i> Harian Akun: <b>"+akun+"</b> <span class='float-right mr-2'>Tanggal <?= date_format(date_create($str_date), 'd - m - Y'); ?> s/d <?= date_format(date_create($end_date), 'd m Y'); ?></span>");
         <?php } ?>
 
         var heightToAdd = 80;    
