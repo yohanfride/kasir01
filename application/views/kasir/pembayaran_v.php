@@ -58,7 +58,7 @@
 <div class="app-content content">
    <div class="content-wrapper">
       <div class="content-header row">
-        <div class="content-header-left col-md-6 col-12 mb-2">
+        <div class="content-header-left col-md-6 col-8 mb-2">
           <h3 class="content-header-title">Pembayaran | No. Faktur: <?= $transaksi->faktur; ?></h3>
           <div class="row breadcrumbs-top">
             <div class="breadcrumb-wrapper col-12">
@@ -71,12 +71,12 @@
             </div>
           </div>
         </div>
-        <div class="content-header-right col-md-6 col-12">
-            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-md-right mb-1"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
+        <div class="content-header-right col-md-6 col-4">
+            <a href="<?= base_url()?>"><button class="btn btn-info box-shadow-2 px-2 float-right mb-1"  type="button" ><i class="ft-arrow-left icon-left"></i> Kembali</button></a>
         </div>
       </div>
       <div class="content-body row">
-         <div class="col-md-6 order-md-2 mb-4">
+         <div class="col-md-6 order-md-2 mb-4 col-6">
             <div class="card">
                <div class="card-content">
                   <div class="card-body">
@@ -131,7 +131,7 @@
                </div>
             </div>
          </div>
-         <div class="col-md-6 order-md-2 mb-4">
+         <div class="col-md-6 order-md-2 mb-4  col-6">
             <div class="card">
                <div class="card-header">
                   <h4 class="card-title">Item Pembelian</h4>

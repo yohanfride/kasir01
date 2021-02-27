@@ -17,7 +17,7 @@
                      </li>
                   </ul>
                   <ul class="nav navbar-nav float-right">
-                     <li>
+                     <li class="d-none d-md-block">
                         <h3 class="white mr-1 mt-2 bold">Daftar Menu: <?= $toko->nama_toko; ?></h3>
                      </li>
                      <li class="dropdown dropdown-notification nav-item">
