@@ -200,7 +200,7 @@ class User extends CI_Controller {
 				$data['error'] = trim(validation_errors());
 			}
 		    else{
-	    		$ganti=$this->user_m->update('users', 'user_id', $data['user_now']->user_id, array('password'=>md5($this->input->post('password'))));
+	    		$ganti=$this->user_m->update('users', 'user_id', $id, array('password'=>md5($this->input->post('password'))));
 	    		if($ganti){
 	    			$data['success']='Reset password berhasil.';
 	    		} else {
