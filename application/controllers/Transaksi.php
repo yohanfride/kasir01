@@ -90,7 +90,7 @@ class transaksi extends CI_Controller {
         		"bayar" => preg_replace("/[^0-9 ]/", "", $this->input->post('bayar') ),
         		"status_bayar" => 1,
 				"catatan" => $this->input->post('catatan'),
-				"meja" => $this->input->post('meja'),
+				"order_by" => $this->input->post('order_by'),
 				"metode_bayar" => $this->input->post('metode_bayar'),
 				"nama_kasir" => $data['user_now']->name,
 				"add_by" => $data['user_now']->user_id

@@ -80,7 +80,7 @@ class cetak extends CI_Controller {
 		    $date = new item2($this->tanggal_indo( date_format(date_create($transaksi->date_add), 'd m Y') ), date_format(date_create($transaksi->date_add), 'H:i:s'),false,18);
 		    $faktur = new item2('No. Faktur:', $transaksi->faktur, false,18);
 		    $metode = new item2('Metode Pembayaran:', $transaksi->metode_bayar, false,14);
-		    $meja = new item2('Meja:', $transaksi->meja, false,14);
+		    $order_by = new item2('Pelanggan:', $transaksi->order_by, false,14);
 		    $footer = explode("\n", $toko->footer_struk);
 		    /* Start the printer */
 		    $printer = new Printer($connector, $profile);
@@ -109,7 +109,7 @@ class cetak extends CI_Controller {
 		    $printer->setJustification(Printer::JUSTIFY_LEFT);
 		    $printer->text($date->getAsString(32));
 		    $printer->text($faktur->getAsString(32));
-		    $printer->text($meja->getAsString(32));
+		    $printer->text($order_by->getAsString(32));
 		    $printer->text($metode->getAsString(32));
 		    $printer->text("--------------------------------\n");
 		   	

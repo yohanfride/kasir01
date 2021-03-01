@@ -53,7 +53,7 @@ class kasir extends CI_Controller {
 				'faktur' =>  $tahun.$bulan.'-'.$total_transaksi.$random,
 				'item_penjualan' => array(),
 				'catatan' =>'', 
-				'meja' => ''
+				'order_by' => ''
 			);
 			$data['transaksi'] = (object) $cart;
 			$this->session->set_userdata('cart',$cart);
@@ -127,7 +127,7 @@ class kasir extends CI_Controller {
 		$data['transaksi'] = $this->session->userdata('cart');
 		if($this->input->post('save')){
 			$data['transaksi']->catatan = $this->input->post('catatan');
-			$data['transaksi']->meja = $this->input->post('meja');
+			$data['transaksi']->order_by = $this->input->post('order_by');
 			$this->session->set_userdata('cart',$data['transaksi']);
 		}
 		$data['transaksi'] = (object) $data['transaksi'];
@@ -147,7 +147,7 @@ class kasir extends CI_Controller {
     		"real_total" => preg_replace("/[^0-9 ]/", "", $this->input->post('real_total') ),
     		"status_bayar" => 1,
 			"catatan" => $this->input->post('catatan'),
-			"meja" => $this->input->post('meja'),
+			"order_by" => $this->input->post('order_by'),
 			"metode_bayar" => $this->input->post('metode_bayar'),
 			"nama_kasir" => $data['user_now']->name,
 			"add_by" => $data['user_now']->user_id

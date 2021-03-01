@@ -175,9 +175,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-12 label-control" for="meja">No. Meja</label>
+                    <label class="col-md-12 label-control" for="order_by">Nama Pelanggan</label>
                     <div class="col-md-12 ">
-                      <input type="text" id="meja" class="form-control" placeholder="No. Meja Pelanggan" name="meja" value="<?= $transaksi->meja?>">
+                      <input type="text" id="order_by" class="form-control" placeholder="Nama Pelanggan" name="order_by" value="<?= $transaksi->order_by?>">
                     </div>
                   </div>
                </div>
@@ -190,7 +190,7 @@
                   </button></a>
                 </div>
             </form>
-            <!-- Nomor Meja -->
+            <!-- Nama Pelanggan -->
             <!-- Catatan -->
          </div>
       </div>

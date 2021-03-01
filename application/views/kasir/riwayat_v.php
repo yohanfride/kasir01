@@ -102,7 +102,7 @@
                                     <th>No.</th>
                                     <th>Tanggal</th>
                                     <th>Faktur</th>
-                                    <th>Meja</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>Total Transkasi</th>
                                     <th>Jumlah Bayar</th>
                                     <!-- <th>Status Dilayani</th> -->
@@ -115,7 +115,7 @@
                                     <td class="text-nowrap"><?= ++$no; ?></td>
                                     <td class="text-nowrap"><?= $d->faktur ?></td>
                                     <td><?= date_format(date_create($d->date_add), 'd/m/Y H:i'); ?></td>
-                                    <td class="text-nowrap"><?= $d->meja ?></td>
+                                    <td class="text-nowrap"><?= $d->order_by ?></td>
                                     <td class="text-nowrap">Rp. <?= number_format($d->total,0,',','.');  ?></td>
                                     <td class="text-nowrap">Rp. <?= number_format($d->bayar,0,',','.');  ?></td>
                                     <!-- <td>

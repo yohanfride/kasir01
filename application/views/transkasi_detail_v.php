@@ -68,8 +68,8 @@
                                 </td>
                             </tr> -->
                             <tr>
-                                <td>Meja</td>
-                                <td class="font-medium"><?= $transaksi->meja ?></td>
+                                <td>Nama Pelanggan</td>
+                                <td class="font-medium"><?= $transaksi->order_by ?></td>
                             </tr>
                             <tr>
                                 <td>Catatan</td>

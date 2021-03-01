@@ -155,8 +155,8 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="meja">Meja Pelanggan</label>
-                                <input type="text" class="form-control" id="meja" name="meja" placeholder="Nomor Meja">
+                                <label for="order_by">Nama Pelanggan</label>
+                                <input type="text" class="form-control" id="order_by" name="order_by" placeholder="Nama Pelanggan">
                             </div>
                         </div>
                         <div class="col-md-12">                

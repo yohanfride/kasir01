@@ -84,8 +84,8 @@
                         <h4 class="mb-1">Informasi Transkasi</h4>
                         <div class="row">
                            <div class="col-md-6 mb-1">
-                              <label for="firstName">No. Meja</label>
-                              <input type="text" class="form-control" id="meja" placeholder="" value="<?= $transaksi->meja?>" name="meja">
+                              <label for="firstName">Nama Pelanggan</label>
+                              <input type="text" class="form-control" id="order_by" placeholder="" value="<?= $transaksi->order_by?>" name="order_by">
                            </div>
                         </div>
                         <div class="">

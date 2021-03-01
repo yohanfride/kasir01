@@ -149,9 +149,9 @@
 	                  	<ul class="list-group mb-1">
 	                    	<li class="list-group-item d-flex justify-content-between lh-condensed">
 		                        <div>
-		                           <span class="product-name"><strong>Meja</strong></span>
+		                           <span class="product-name"><strong>Nama Pelanggan</strong></span>
 		                        </div>
-		                        <span class="text-muted"><?= $transaksi->meja?></span>
+		                        <span class="text-muted"><?= $transaksi->order_by?></span>
 	                     	</li>
 	                     	<li class="list-group-item d-flex justify-content-between lh-condensed">
 		                        <div>
