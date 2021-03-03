@@ -34,11 +34,11 @@ class Bahan_m extends My_Model{
 	function cek_hapus($id){
 		$sql = "SELECT * FROM item_pembelian  WHERE idstok=$id";
 		$res = $this->db->query($sql);
-		$r=$res->num_rows;
+		$r=$res->num_rows();
 		if(!$r){
 			$sql = "SELECT * FROM pengurangan_stok  WHERE idstok=$id";
 			$res = $this->db->query($sql);
-			$r=$res->num_rows;	
+			$r=$res->num_rows();	
 		}
 		$res->free_result();
 		return $r;

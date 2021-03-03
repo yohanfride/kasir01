@@ -40,7 +40,7 @@ class user_m extends My_Model{
 		}
 		$sql.= " ORDER by user_id ASC";
 		$res = $this->db->query($sql);
-		$r = $res->num_rows;
+		$r = $res->num_rows();
 		$res->free_result();
 		return $r;
 	}

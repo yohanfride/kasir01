@@ -31,7 +31,7 @@ class Menu_m extends My_Model{
 			$sql.= " AND status = $status ";
 		}
 		$res = $this->db->query($sql);
-		$r = $res->num_rows;
+		$r = $res->num_rows();
 		$res->free_result();
 		return $r;
 	}
@@ -47,7 +47,7 @@ class Menu_m extends My_Model{
 	function cek_hapus($id){
 		$sql = "SELECT * FROM item_penjualan  WHERE idmenu=$id";
 		$res = $this->db->query($sql);
-		$r=$res->num_rows;
+		$r=$res->num_rows();
 		$res->free_result();
 		return $r;
 	}
