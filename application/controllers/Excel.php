@@ -219,7 +219,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -315,7 +315,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -397,7 +397,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -556,7 +556,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -643,7 +643,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -756,7 +756,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -937,7 +937,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1033,7 +1033,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1115,7 +1115,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1262,7 +1262,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1364,7 +1364,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1603,7 +1603,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();		
 	}
@@ -1711,7 +1711,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1805,7 +1805,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -1898,7 +1898,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
@@ -2008,7 +2008,7 @@ class Excel extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
-		ob_end_clean();
+		if (ob_get_contents()) ob_end_clean();
 		$write->save('php://output');
 		exit();	
     }
