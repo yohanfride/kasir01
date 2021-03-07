@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\RawbtPrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\CapabilityProfile;
 
 class cetak extends CI_Controller {
@@ -54,12 +55,19 @@ class cetak extends CI_Controller {
 	public function ajax_transkasi($faktur){     
 		$transaksi = $this->transaksi_m->get_detail($faktur);
 		$toko = $this->toko_m->get();
+
+		$profile = CapabilityProfile::load("POS-5890");
+
+	    /* Fill in your own connector here */
+	    try {
+	    	$connector = new WindowsPrintConnector("smb://LAPTOP-LLDFOTC6/POS58");
+	    	$printer = new Printer($connector, $profile);
+	    } catch(Exception $e) {
+	    	$connector = new RawbtPrintConnector();
+	    	$printer = new Printer($connector, $profile);
+	    }
+
 		try {
-		    $profile = CapabilityProfile::load("POS-5890");
-
-		    /* Fill in your own connector here */
-		    $connector = new RawbtPrintConnector();
-
 		    /* Information for the receipt */
 		    $items = array();
 		    $total = 0;
@@ -83,7 +91,6 @@ class cetak extends CI_Controller {
 		    $order_by = new item2('Pelanggan:', $transaksi->order_by, false,14);
 		    $footer = explode("\n", $toko->footer_struk);
 		    /* Start the printer */
-		    $printer = new Printer($connector, $profile);
 
 		    $printer->setJustification(Printer::JUSTIFY_CENTER);
 		    /* Print top logo */
