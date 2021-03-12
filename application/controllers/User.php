@@ -10,7 +10,7 @@ class User extends CI_Controller {
 		if(!$this->session->userdata('kasir01')) 
 			redirect(base_url() . "auth/login");
 		$user = $this->session->userdata('kasir01');
-		if($user->role == 'kasir' || $user->role == 'pegawai')
+		if($user->role == 'kasir')
 			redirect(base_url() . "auth/login");
     }
 
@@ -81,11 +81,15 @@ class User extends CI_Controller {
 
 	public function index()
 	{        
+
 		$data=array();
 		$data['success']='';
 		$data['error']='';
 		$data['toko'] = $this->toko_m->get();
 		$data['user_now'] =  $this->session->userdata('kasir01');
+		if($data['user_now']->role == 'pegawai')
+			redirect(base_url() . "auth/login");
+
 		$data['title'] = $data['toko']->nama_toko.' - Data Pengguna';
 		$data['menu']='user';
 
@@ -108,6 +112,8 @@ class User extends CI_Controller {
 		$data['error']='';
 		$data['toko'] = $this->toko_m->get();
 		$data['user_now'] =  $this->session->userdata('kasir01');
+		if($data['user_now']->role == 'pegawai')
+			redirect(base_url() . "auth/login");
 		$data['title'] = $data['toko']->nama_toko.' - Tambah Pengguna Baru';
 		$data['menu']='user';
         if($this->input->post('save')){
@@ -151,6 +157,8 @@ class User extends CI_Controller {
 		$data['user_now'] =  $this->session->userdata('kasir01');
 		$data['title'] = $data['toko']->nama_toko.' - Ubah Pengguna Baru';	
 		$data['menu']='user';
+		if($data['user_now']->role == 'pegawai')
+			redirect(base_url() . "auth/login");
 
 		if($this->input->post('save')){   
 			$this->load->library('form_validation');
@@ -189,6 +197,8 @@ class User extends CI_Controller {
 		$data['user_now'] =  $this->session->userdata('kasir01');
 		$data['title'] = $data['toko']->nama_toko.' - Reset Password';
 		$data['menu']='';
+		if($data['user_now']->role == 'pegawai')
+			redirect(base_url() . "auth/login");
 
 		if($this->input->post('save')){
 			$this->load->library('form_validation');
