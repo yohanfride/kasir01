@@ -59,13 +59,13 @@ class cetak extends CI_Controller {
 		$profile = CapabilityProfile::load("POS-5890");
 
 	    /* Fill in your own connector here */
-	    try {
-	    	$connector = new WindowsPrintConnector("smb://LAPTOP-LLDFOTC6/POS58");
-	    	$printer = new Printer($connector, $profile);
-	    } catch(Exception $e) {
+	    // try {
+	    // 	$connector = new WindowsPrintConnector("smb://LAPTOP-LLDFOTC6/POS58");
+	    // 	$printer = new Printer($connector, $profile);
+	    // } catch(Exception $e) {
 	    	$connector = new RawbtPrintConnector();
 	    	$printer = new Printer($connector, $profile);
-	    }
+	    // }
 
 		try {
 		    /* Information for the receipt */

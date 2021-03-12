@@ -196,7 +196,7 @@
         });
         $.get(url, function (data) {
             console.log(data);
-            //window.location.href = data;
+            window.location.href = data;
             setTimeout(function(){ 
               swal('Proses Cetak Berhasil','Proses percetakan berhasil dilakukan','success');
             }, 3000);
