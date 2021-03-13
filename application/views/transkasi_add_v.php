@@ -131,7 +131,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="body-machine">Jumlah Bayar</label>
-                                <input type="text" class="form-control uang" id="bayar" name="bayar">
+                                <input type="text" class="form-control uang" id="bayar" name="bayar" inputmode="numeric">
                             </div>
                             <div class="form-group">
                                 <label for="body-machine">Kembali</label>

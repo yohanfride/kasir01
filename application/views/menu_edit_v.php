@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="price">Harga</label>
-                                        <input type="text" class="form-control uang" id="price" name="price" placeholder="Masukkan Harga Menu" required="required" value="<?= $data->harga; ?>" >
+                                        <input type="text" class="form-control uang" id="price" name="price" placeholder="Masukkan Harga Menu" required="required" value="<?= $data->harga; ?>" inputmode="numeric">
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Keterangan</label>

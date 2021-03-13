@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Jumlah</label>
-                            <input type="number" class="form-control uang frm-ajax" id="jumlah" name="jumlah" placeholder="Masukkan Jumlah Pengurangan" required="required">
+                            <input type="number" class="form-control uang frm-ajax" id="jumlah" name="jumlah" placeholder="Masukkan Jumlah Pengurangan" required="required" inputmode="numeric">
                         </div>
                         <div class="form-group">
                             <label for="name">Keterangan</label>

@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group">
                             <label for="biaya">Biaya Tambahan</label>
-                            <input type="text" class="form-control uang" id="biaya" name="biaya" placeholder="" value="0"  placeholder="Masukkan Biaya Tambahan">
+                            <input type="text" class="form-control uang" id="biaya" name="biaya" placeholder="" value="0"  placeholder="Masukkan Biaya Tambahan" inputmode="numeric">
                         </div>
                         <div class="form-group">
                             <label for="total">Total Biaya</label>
@@ -130,11 +130,11 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Jumlah</label>
-                            <input type="text" class="form-control uang frm-ajax" id="jumlah" name="jumlah" placeholder="Masukkan Jumlah Pembelian" required="required">
+                            <input type="text" class="form-control uang frm-ajax" id="jumlah" name="jumlah" placeholder="Masukkan Jumlah Pembelian" required="required" inputmode="numeric">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Harga Pembelian (Total Semua Item)</label>
-                            <input type="text" class="form-control uang frm-ajax" id="harga" name="harga" placeholder="Masukkan Harga Pembelian Total" required="required">
+                            <input type="text" class="form-control uang frm-ajax" id="harga" name="harga" placeholder="Masukkan Harga Pembelian Total" required="required" inputmode="numeric">
                         </div>
                     </div>
                     <div class="modal-footer">
