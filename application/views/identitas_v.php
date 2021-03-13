@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">No. Telp.</label>
-                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nama Pemilik" required="required" value="<?= $data->no_telepon; ?>">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan No. Telepon" required="required" value="<?= $data->no_telepon; ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
