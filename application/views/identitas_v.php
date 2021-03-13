@@ -52,11 +52,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="pemilik">Nama Pemilik</label>
-                                        <input type="text" class="form-control" id="pemilik" name="pemilik" placeholder="Masukkan Nama Pemilik" required="required" value="<?= $data->nama_pemilik; ?>">
+                                        <input type="text" class="form-control" id="pemilik" name="pemilik" placeholder="Masukkan Nama Pemilik"  value="<?= $data->nama_pemilik; ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">No. Telp.</label>
-                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nama Pemilik" required="required" value="<?= $data->nama_pemilik; ?>">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nama Pemilik" required="required" value="<?= $data->no_telepon; ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
