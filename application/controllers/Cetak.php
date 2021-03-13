@@ -90,25 +90,25 @@ class cetak extends CI_Controller {
 		return $list;
 	}
 
-	public function cek($faktur){
-		$transaksi = $this->transaksi_m->get_detail($faktur);
-		// $toko = $this->toko_m->get();
-		// $footer = explode("\n", $toko->footer_struk);
-		// echo "<pre>";
-		// print_r($footer);
-		// echo "</pre>";
-		// foreach ($footer as $val) {
-	 //        echo strlen($val).'<br/>'; 	    		
-		$list = $this->split_versi1($transaksi->catatan);
-		echo "<pre>";
-		print_r($list);
-		echo "</pre>";
-		echo "<br/>";
-		$list = $this->split_versi2($transaksi->catatan);
-		echo "<pre>";
-		print_r($list);
-		echo "</pre>";
-	}
+	// public function cek($faktur){
+	// 	$transaksi = $this->transaksi_m->get_detail($faktur);
+	// 	// $toko = $this->toko_m->get();
+	// 	// $footer = explode("\n", $toko->footer_struk);
+	// 	// echo "<pre>";
+	// 	// print_r($footer);
+	// 	// echo "</pre>";
+	// 	// foreach ($footer as $val) {
+	//  //        echo strlen($val).'<br/>'; 	    		
+	// 	$list = $this->split_versi1($transaksi->catatan);
+	// 	echo "<pre>";
+	// 	print_r($list);
+	// 	echo "</pre>";
+	// 	echo "<br/>";
+	// 	$list = $this->split_versi2($transaksi->catatan);
+	// 	echo "<pre>";
+	// 	print_r($list);
+	// 	echo "</pre>";
+	// }
 
 	public function ajax_transkasi($faktur){     
 		$transaksi = $this->transaksi_m->get_detail($faktur);
@@ -121,8 +121,8 @@ class cetak extends CI_Controller {
 	    // 	$connector = new WindowsPrintConnector("smb://LAPTOP-LLDFOTC6/POS58");
 	    // 	$printer = new Printer($connector, $profile);
 	    // } catch(Exception $e) {
-	    	$connector = new RawbtPrintConnector();
-	    	$printer = new Printer($connector, $profile);
+	    	// $connector = new RawbtPrintConnector();
+	    	// $printer = new Printer($connector, $profile);
 	    // }
 
 		try {
