@@ -182,9 +182,9 @@ class cetak extends CI_Controller {
 		    $printer->text($order_by->getAsString(32));
 		    $printer->text($metode->getAsString(32));
 		    $printer->text("Catatan:\n");
-		    // foreach ($catatan as $val) {
-		    //     $printer->text($val."\n"); 
-		    // }
+		    foreach ($catatan as $val) {
+		        $printer->text($val."\n"); 
+		    }
 		    $printer->text("--------------------------------\n");
 		   	
 		   	foreach ($items as $item) {
