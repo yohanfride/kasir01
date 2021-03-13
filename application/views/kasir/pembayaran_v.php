@@ -96,7 +96,7 @@
                         <h4 class="mb-1">Pembayaran</h4>
                         <div class="mb-1">
                             <label for="bayar">Total Transaksi</label>
-                            <input type="text" class="form-control uang" id="input-total" name='total'>
+                            <input type="text" class="form-control uang" id="input-total" name='total' inputmode="numeric">
                         </div>
                         <div class="mb-1">
                            <label for="bayar">Jumlah Bayar</label>
