@@ -101,7 +101,7 @@
                         <div class="mb-1">
                            <label for="bayar">Jumlah Bayar</label>
                            <div class="input-group">                                
-                              <input type="text" class="form-control uang" id="bayar" name='bayar'>
+                              <input type="text" class="form-control uang" id="bayar" name='bayar' inputmode="numeric">
                               <div class="input-group-prepend">
                                  <span class="input-group-text" onclick="gettotal()">Sesuai Total</span>
                               </div>

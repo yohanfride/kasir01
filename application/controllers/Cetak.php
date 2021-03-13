@@ -40,16 +40,74 @@ class cetak extends CI_Controller {
 		$this->load->view('print_test', $data);
 	}
 
+	function split_versi1($text){
+		$catatan = explode("\n", $text);
+		$list = array();
+		foreach ($catatan as $val) {
+			if(strlen($val)<31){
+				$list[] = $val;
+			} else {
+				$list_item = explode(" ", $val);
+				$partial = "";
+				foreach ($list_item as $val_item) {
+					if($partial==""){
+						$partial = $val_item;
+					} else {
+						$cekpartial = $partial." ".$val_item;
+						if(strlen($cekpartial)<32){
+							$partial.=" ".$val_item;
+						} else {
+							$list[] = $partial;
+							$partial = $val_item;
+						}
+					}		
+				}
+				$list[] = $partial;
+			}	 
+		}
+		return $list;
+	}
+
+	function split_versi2($text){
+		$catatan = preg_replace('~[\r\n]+~', ', ', $text);
+		$list = array();
+		$list_item = explode(" ", $catatan);
+		$partial = "";
+		foreach ($list_item as $val_item) {
+			if($partial==""){
+				$partial = $val_item;
+			} else {
+				$cekpartial = $partial." ".$val_item;
+				if(strlen($cekpartial)<31){
+					$partial.=" ".$val_item;
+				} else {
+					$list[] = $partial;
+					$partial = $val_item;
+				}
+			}		
+		}
+		$list[] = $partial;
+		return $list;
+	}
+
 	public function cek($faktur){
 		$transaksi = $this->transaksi_m->get_detail($faktur);
-		$toko = $this->toko_m->get();
-		$footer = explode("\n", $toko->footer_struk);
+		// $toko = $this->toko_m->get();
+		// $footer = explode("\n", $toko->footer_struk);
+		// echo "<pre>";
+		// print_r($footer);
+		// echo "</pre>";
+		// foreach ($footer as $val) {
+	 //        echo strlen($val).'<br/>'; 	    		
+		$list = $this->split_versi1($transaksi->catatan);
 		echo "<pre>";
-		print_r($footer);
+		print_r($list);
 		echo "</pre>";
-		foreach ($footer as $val) {
-	        echo strlen($val).'<br/>'; 
-	    }
+		echo "<br/>";
+		$list = $this->split_versi2($transaksi->catatan);
+		echo "<pre>";
+		print_r($list);
+		echo "</pre>";
 	}
 
 	public function ajax_transkasi($faktur){     
@@ -69,6 +127,8 @@ class cetak extends CI_Controller {
 
 		try {
 		    /* Information for the receipt */
+		    $connector = new RawbtPrintConnector();
+	    	$printer = new Printer($connector, $profile);
 		    $items = array();
 		    $total = 0;
 		    $jumlah = 0;
@@ -89,6 +149,9 @@ class cetak extends CI_Controller {
 		    $faktur = new item2('No. Faktur:', $transaksi->faktur, false,18);
 		    $metode = new item2('Metode Pembayaran:', $transaksi->metode_bayar, false,14);
 		    $order_by = new item2('Pelanggan:', $transaksi->order_by, false,14);
+		    // $catatan1 = new item2('Catatan:','', false,14);
+		    // $catatan2 = new item2($transaksi->catatan,'', false,14);
+		    $catatan = $this->split_versi2($transaksi->catatan);
 		    $footer = explode("\n", $toko->footer_struk);
 		    /* Start the printer */
 
@@ -118,6 +181,10 @@ class cetak extends CI_Controller {
 		    $printer->text($faktur->getAsString(32));
 		    $printer->text($order_by->getAsString(32));
 		    $printer->text($metode->getAsString(32));
+		    $printer->text("Catatan:\n");
+		    foreach ($catatan as $val) {
+		        $printer->text($val."\n"); 
+		    }
 		    $printer->text("--------------------------------\n");
 		   	
 		   	foreach ($items as $item) {

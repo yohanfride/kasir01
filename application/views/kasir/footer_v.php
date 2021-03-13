@@ -11,48 +11,48 @@
       <!-- BEGIN VENDOR JS-->
       <script src="<?= base_url()?>assets/kasir/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
       <script type="text/javascript">
-        var requestFullscreen = function (ele) {
-          if (ele.requestFullscreen) {
-            ele.requestFullscreen();
-          } else if (ele.webkitRequestFullscreen) {
-            ele.webkitRequestFullscreen();
-          } else if (ele.mozRequestFullScreen) {
-            ele.mozRequestFullScreen();
-          } else if (ele.msRequestFullscreen) {
-            ele.msRequestFullscreen();
-          } else {
-            console.log('Fullscreen API is not supported.');
-          }
-        };
+        // var requestFullscreen = function (ele) {
+        //   if (ele.requestFullscreen) {
+        //     ele.requestFullscreen();
+        //   } else if (ele.webkitRequestFullscreen) {
+        //     ele.webkitRequestFullscreen();
+        //   } else if (ele.mozRequestFullScreen) {
+        //     ele.mozRequestFullScreen();
+        //   } else if (ele.msRequestFullscreen) {
+        //     ele.msRequestFullscreen();
+        //   } else {
+        //     console.log('Fullscreen API is not supported.');
+        //   }
+        // };
 
-        var exitFullscreen = function () {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-          } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-          } else {
-            console.log('Fullscreen API is not supported.');
-          }
-        };
+        // var exitFullscreen = function () {
+        //   if (document.exitFullscreen) {
+        //     document.exitFullscreen();
+        //   } else if (document.webkitExitFullscreen) {
+        //     document.webkitExitFullscreen();
+        //   } else if (document.mozCancelFullScreen) {
+        //     document.mozCancelFullScreen();
+        //   } else if (document.msExitFullscreen) {
+        //     document.msExitFullscreen();
+        //   } else {
+        //     console.log('Fullscreen API is not supported.');
+        //   }
+        // };
 
-        var fsDocButton = document.getElementById('fs-doc-button');
-        var fsExitDocButton = document.getElementById('fs-exit-doc-button');
+        // var fsDocButton = document.getElementById('fs-doc-button');
+        // var fsExitDocButton = document.getElementById('fs-exit-doc-button');
 
-        fsDocButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          requestFullscreen(document.documentElement);
-        });
+        // fsDocButton.addEventListener('click', function(e) {
+        //   e.preventDefault();
+        //   requestFullscreen(document.documentElement);
+        // });
 
-        fsExitDocButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          exitFullscreen();
-        });
+        // fsExitDocButton.addEventListener('click', function(e) {
+        //   e.preventDefault();
+        //   exitFullscreen();
+        // });
 
-        setTimeout( function(){ $("#fs-doc-button").click(); }, 3000 );
+        // setTimeout( function(){ $("#fs-doc-button").click(); }, 3000 );
 
 
         // jQuery.event.special.touchstart = {
