@@ -139,15 +139,20 @@ class cetak extends CI_Controller {
 		    	$itemdiskon = $d->diskon;
 		    	if(empty($itemdiskon))
 		    		$itemdiskon = 0;
-		    	$items_diskon[$i++]= $itemdiskon;
+		    	if($itemdiskon > 0){
+		    		$items_diskon[$i] = new item2('','(-'.number_format($d->diskon,0,'.',',').')');
+		    	} else {
+		    		$items_diskon[$i] = '';
+		    	}
 		    	$total += ($d->harga * $d->jumlah);
 		    	$diskon+= $itemdiskon;
 		    	$jumlah += $d->jumlah;
+		    	$i++;
 		    }
 		    $pembulatan = 0;
 		    $total_semua = $transaksi->total;
 		    if($total_semua != ($total - $diskon) ){
-		    	$pembulatan = $total - $total_semua;
+		    	$pembulatan = ($total - $diskon) - $total_semua;
 		    }
 		    $subtotal = new item2('Subtotal', number_format($total,0,'.',',') );
 		    $diskon = new item2('Diskon', number_format($diskon,0,'.',',') );
@@ -203,9 +208,13 @@ class cetak extends CI_Controller {
 		        $printer->text($val."\n"); 
 		    }
 		    $printer->text("--------------------------------\n");
-		   	
+		   	$i=0;
 		   	foreach ($items as $item) {
 		        $printer->text($item->getAsString(32)); 
+		        if($items_diskon[$i]){
+		   			$printer->text($items_diskon[$i]->getAsString(32));
+		        }
+		        $i++;
 		    }
 		    $printer->setEmphasis(true);
 		    $printer->text($subtotal->getAsString(32));
