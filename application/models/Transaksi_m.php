@@ -44,7 +44,7 @@ class transaksi_m extends My_Model{
 		$r=$res->row();
 		$res->free_result();
 
-		$sql2 = "SELECT * FROM item_penjualan a join menu b on a.idmenu = b.idmenu left join kategori c on b.idkategori = c.idkategori  
+		$sql2 = "SELECT *,a.diskon AS item_diskon FROM item_penjualan a join menu b on a.idmenu = b.idmenu left join kategori c on b.idkategori = c.idkategori  
 				 WHERE faktur = '$id'";
 		$res2 = $this->db->query($sql2);
 		$r2=$res2->result();
