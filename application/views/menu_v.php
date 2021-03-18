@@ -53,6 +53,7 @@
                                 <th>Menu</th>
                                 <th>Kategori</th>
                                 <th>Harga</th>
+                                <th>Diskon</th>
                                 <th>Status</th>
                                 <th>Keterangan</th>
                                 <th style="width: 10%">Aksi</th>
@@ -71,7 +72,7 @@
                                 <td class="text-nowrap"><?= $d->menu ?></td>
                                 <td class="text-nowrap"><?= $d->kategori ?></td>
                                 <td class="text-nowrap"><?= number_format($d->harga,0,',','.');  ?></td>
-
+                                <td class="text-nowrap"><?= number_format($d->diskon,2,',','.');  ?> %</td>
                                 <td>
                                     <?php if($d->status){ ?>
                                         <span class="label label-primary">Aktif</span>

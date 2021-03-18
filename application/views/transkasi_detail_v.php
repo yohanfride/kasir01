@@ -50,6 +50,10 @@
                                 <td class="font-medium"><?= $transaksi->nama_kasir ?></td>
                             </tr>
                             <tr>
+                                <td>Total Diskon</td>
+                                <td class="font-medium">Rp. <?= number_format($transaksi->diskon,0,',','.');  ?></td>
+                            </tr>
+                            <tr>
                                 <td>Total Transaksi</td>
                                 <td class="font-medium">Rp. <?= number_format($transaksi->total,0,',','.');  ?></td>
                             </tr>
@@ -109,6 +113,7 @@
                                     <th>Harga</th>
                                     <th>Jumlah</th>
                                     <th>Total</th>
+                                    <th>Diskon</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,6 +132,7 @@
                                     <td class="text-nowrap">Rp. <?= number_format($transaksi->harga,0,',','.');  ?></td>
                                     <td class="text-nowrap"><?= number_format($transaksi->jumlah,0,',','.');  ?></td>
                                     <td class="text-nowrap">Rp. <?= number_format($transaksi->harga*$transaksi->jumlah,0,',','.');  ?></td>
+                                    <td class="text-nowrap">Rp. <?= number_format($transaksi->diskon,0,',','.');  ?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

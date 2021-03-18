@@ -132,16 +132,33 @@ class cetak extends CI_Controller {
 		    $items = array();
 		    $total = 0;
 		    $jumlah = 0;
+		    $diskon = 0; $i=0;
+		    $items_diskon = array();
 		    foreach ($transaksi->item_penjualan as $d) {
 		    	$items[] = new item($d->menu,$d->harga,$d->jumlah);
+		    	$itemdiskon = $d->diskon;
+		    	if(empty($itemdiskon))
+		    		$itemdiskon = 0;
+		    	$items_diskon[$i++]= $itemdiskon;
 		    	$total += ($d->harga * $d->jumlah);
+		    	$diskon+= $itemdiskon;
 		    	$jumlah += $d->jumlah;
 		    }
-
-
+		    $pembulatan = 0;
+		    $total_semua = $transaksi->total;
+		    if($total_semua != ($total - $diskon) ){
+		    	$pembulatan = $total - $total_semua;
+		    }
 		    $subtotal = new item2('Subtotal', number_format($total,0,'.',',') );
+		    $diskon = new item2('Diskon', number_format($diskon,0,'.',',') );
+		    if($pembulatan>0){
+		    	$pembulatans = new item2('Pembulatan', number_format($pembulatan,0,'.',',') );
+		    } else {
+		    	$pembulatans = '';
+		    }
 		    // $tax = new item('A local tax', '1.30');
-		    $total = new item2('Total', number_format($total,0,'.',','), false,18);
+		    $total = new item2('Total', number_format($total_semua,0,'.',','), false,18);
+		    
 		    /* Date is kept the same for testing */
 			// $date = date('l jS \of F Y h:i:s A');
 		    $logo = EscposImage::load("assets/upload/toko/".$toko->logo_struk, false);
@@ -192,7 +209,12 @@ class cetak extends CI_Controller {
 		    }
 		    $printer->setEmphasis(true);
 		    $printer->text($subtotal->getAsString(32));
+		    $printer->text($diskon->getAsString(32));
+		    if($pembulatans){
+		    	$printer->text($pembulatans->getAsString(32));
+			}
 		    $printer->setEmphasis(false);
+		    $printer->text("--------------------------------\n");
 		    $printer->feed();
 
 		    /* Tax and total */

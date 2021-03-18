@@ -87,6 +87,7 @@ class kasir extends CI_Controller {
 				 	$data['transaksi']->item_penjualan[$id] = array(
 				 		'nama' => $menu->menu,
 				 		'harga' => $menu->harga,
+				 		'diskon' => $menu->diskon,
 				 		'jumlah' => 1
 				 	); 	
 				} else {
@@ -142,6 +143,7 @@ class kasir extends CI_Controller {
 		$data['transaksi'] = $this->session->userdata('cart');
 		$input = array(
     		"faktur" => $data['transaksi']->faktur,
+    		"diskon" => preg_replace("/[^0-9 ]/", "", $this->input->post('diskon') ),
     		"total" => preg_replace("/[^0-9 ]/", "", $this->input->post('total') ),
     		"bayar" => preg_replace("/[^0-9 ]/", "", $this->input->post('bayar') ),
     		"real_total" => preg_replace("/[^0-9 ]/", "", $this->input->post('real_total') ),
@@ -160,7 +162,8 @@ class kasir extends CI_Controller {
         			'faktur' => $data['transaksi']->faktur,
         			'idmenu' => $key,
         			'harga' => $value['harga'],
-        			'jumlah' => $value['jumlah']
+        			'jumlah' => $value['jumlah'],
+        			'diskon' => ($value['harga'] * $value['jumlah']) * ($value['diskon'] / 100 )
         		);
     			$respo = $this->transaksi_m->insert('item_penjualan',$input);
         	}

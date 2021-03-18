@@ -111,19 +111,28 @@
 	                     <?php 
 	                         $total = 0;
 	                         $jumlah = 0;
+                         	 $diskon = 0;
 	                         $no = 1;
 	                         if(isset($transaksi->item_penjualan))
 	                         foreach ($transaksi->item_penjualan as $key => $value) {
 	                             $value = (object) $value;
 	                             $total+= ( $value->harga * $value->jumlah );
 	                             $jumlah+=$value->jumlah;
+                             	 $item_diskon = ( $value->harga * $value->jumlah ) * ($value->diskon / 100);
+                             	 $diskon+=$item_diskon;
 	                     ?>
 	                     <li class="list-group-item d-flex justify-content-between lh-condensed">
 	                        <div>
 	                           <h6 class="my-0"><?= $value->menu ?> x <?= number_format($value->jumlah,0,',','.');  ?></h6>
 	                           <small class="text-muted"><strong>Rp. <?= number_format($value->harga,0,',','.');  ?></strong></small>
 	                        </div>
-	                        <span class="text-muted">Rp. <?= number_format($value->harga * $value->jumlah,0,',','.');  ?></span>
+	                        <div>
+	                           <h6 class="text-muted">Rp. <?= number_format($value->harga * $value->jumlah,0,',','.');  ?></h6>
+	                           <?php if($item_diskon > 0){ ?>
+	                           <small class="text-danger"><strong>( - Rp. <?= number_format($item_diskon,0,',','.');  ?>)</strong></small>
+	                            <?php } ?>
+	                        </div>
+	                        <!-- <span class="text-muted">Rp. <?= number_format($value->harga * $value->jumlah,0,',','.');  ?></span> -->
 	                     </li>
 	                     <?php } ?>
 
@@ -132,8 +141,12 @@
 	                        <span class="product-price"><strong>Rp. <?= number_format($total,0,',','.');  ?></strong></span>
 	                     </li>
 	                     <li class="list-group-item d-flex justify-content-between">
+	                        <span class="product-name"><strong>Diskon</strong></span>
+	                        <span class="product-price text-danger"><strong>Rp. <?= number_format($diskon,0,',','.');  ?></strong></span>
+	                     </li>
+	                     <li class="list-group-item d-flex justify-content-between">
 	                        <span class="product-name success" style="font-size: 16px;">Total Pembayaran</span>
-	                        <span class="product-price">Rp. <?= number_format($total,0,',','.');  ?></span>
+	                        <span class="product-price">Rp. <?= number_format($total-$diskon,0,',','.');  ?></span>
 	                        <input type="hidden" id="total" value="<?= $total; ?>">
 	                     </li>
 	                  </ul>

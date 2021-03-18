@@ -49,6 +49,7 @@ class Menu extends CI_Controller {
         	$input = array(
         		"menu" => $this->input->post('menu'),
         		"harga" => preg_replace("/[^0-9 ]/", "", $this->input->post('price') ),
+        		"diskon" => str_replace(",", ".", $this->input->post('diskon') ),
         		"idkategori" => $this->input->post('category'),
         		"status" => $this->input->post('status'),
 				"keterangan_menu" => $this->input->post('detail'),
@@ -87,6 +88,7 @@ class Menu extends CI_Controller {
         	$input = array(
         		"menu" => $this->input->post('menu'),
         		"harga" => preg_replace("/[^0-9 ]/", "", $this->input->post('price') ),
+        		"diskon" => str_replace(",", ".", $this->input->post('diskon') ),
         		"idkategori" => $this->input->post('category'),
         		"status" => $this->input->post('status'),
 				"keterangan_menu" => $this->input->post('detail'),

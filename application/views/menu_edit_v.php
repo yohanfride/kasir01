@@ -64,6 +64,10 @@
                                         <input type="text" class="form-control uang" id="price" name="price" placeholder="Masukkan Harga Menu" required="required" value="<?= $data->harga; ?>" inputmode="numeric">
                                     </div>
                                     <div class="form-group">
+                                        <label for="price">Diskon (%)</label>
+                                        <input type="text" class="form-control persen" id="diskon" name="diskon" placeholder="Masukkan Diskon Menu (%)" required="required" inputmode="numeric" value="<?= $data->diskon; ?>">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="name">Keterangan</label>
                                         <textarea class="form-control" rows="3" id="detail" name="detail" ><?= $data->keterangan_menu; ?></textarea>
                                     </div>
@@ -110,6 +114,7 @@
     $(document).ready(function(){
         // Format mata uang.
         $( '.uang' ).mask('000.000.000.000.000', {reverse: true});
+        $( '.persen' ).mask('000,00', {reverse: true});
         // Basic
         $('.dropify').dropify();
     })

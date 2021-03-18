@@ -95,7 +95,11 @@
                         <hr class="mt-1 mb-1">
                         <h4 class="mb-1">Pembayaran</h4>
                         <div class="mb-1">
-                            <label for="bayar">Total Transaksi</label>
+                            <label for="diskon">Total Diskon</label>
+                            <input type="text" class="form-control uang" id="input-diskon" name='diskon' inputmode="numeric">
+                        </div>
+                        <div class="mb-1">
+                            <label for="total">Total Transaksi</label>
                             <input type="text" class="form-control uang" id="input-total" name='total' inputmode="numeric">
                         </div>
                         <div class="mb-1">
@@ -103,7 +107,7 @@
                            <div class="input-group">                                
                               <input type="text" class="form-control uang" id="bayar" name='bayar' inputmode="numeric">
                               <div class="input-group-prepend">
-                                 <span class="input-group-text" onclick="gettotal()">Sesuai Total</span>
+                                 <span class="input-group-text" style="cursor: pointer;" onclick="gettotal()">Sesuai Total</span>
                               </div>
                            </div>
                         </div>
@@ -141,19 +145,29 @@
                      <?php 
                          $total = 0;
                          $jumlah = 0;
+                         $diskon = 0;
                          $no = 1;
                          if(isset($transaksi->item_penjualan))
                          foreach ($transaksi->item_penjualan as $key => $value) {
                              $value = (object) $value;
                              $total+= ( $value->harga * $value->jumlah );
                              $jumlah+=$value->jumlah;
+                             $item_diskon = ( $value->harga * $value->jumlah ) * ($value->diskon / 100);
+                             $diskon+=$item_diskon;
+
                      ?>
                      <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                            <h6 class="my-0"><?= $value->nama ?> x <?= number_format($value->jumlah,0,',','.');  ?></h6>
                            <small class="text-muted"><strong>Rp. <?= number_format($value->harga,0,',','.');  ?></strong></small>
                         </div>
-                        <span class="text-muted">Rp. <?= number_format($value->harga * $value->jumlah,0,',','.');  ?></span>
+                        <div>
+                           <h6 class="text-muted">Rp. <?= number_format($value->harga * $value->jumlah,0,',','.');  ?></h6>
+                           <?php if($item_diskon > 0){ ?>
+                           <small class="text-danger"><strong>( - Rp. <?= number_format($item_diskon,0,',','.');  ?>)</strong></small>
+                            <?php } ?>
+                        </div>
+                        </li>
                      </li>
                      <?php } ?>
 
@@ -162,9 +176,14 @@
                         <span class="product-price"><strong>Rp. <?= number_format($total,0,',','.');  ?></strong></span>
                      </li>
                      <li class="list-group-item d-flex justify-content-between">
+                        <span class="product-name"><strong>Diskon</strong></span>
+                        <span class="product-price text-danger"><strong>Rp. <?= number_format($diskon,0,',','.');  ?></strong></span>
+                     </li>
+                     <li class="list-group-item d-flex justify-content-between">
                         <span class="product-name success" style="font-size: 16px;">Total Pembayaran</span>
-                        <span class="product-price">Rp. <?= number_format($total,0,',','.');  ?></span>
-                        <input type="hidden" id="total-true" value="<?= $total; ?>">
+                        <span class="product-price">Rp. <?= number_format($total-$diskon,0,',','.');  ?></span>
+                        <input type="hidden" id="total-true" value="<?= $total-$diskon; ?>">
+                        <input type="hidden" id="diskon-true" value="<?= $diskon; ?>">
                      </li>
                   </ul>
                </div>
@@ -190,6 +209,7 @@
     };
    $(document).ready(function() {
         $("#input-total").val($("#total-true").val());
+        $("#input-diskon").val($("#diskon-true").val());
         $("#input-real-total").val($("#total-true").val());
         $( '.uang' ).mask('000.000.000.000.000', {reverse: true});
         $("#frm-cart").submit(function(e) {
