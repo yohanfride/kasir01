@@ -212,6 +212,7 @@
         $("#input-diskon").val($("#diskon-true").val());
         $("#input-real-total").val($("#total-true").val());
         $( '.uang' ).mask('000.000.000.000.000', {reverse: true});
+
         $("#frm-cart").submit(function(e) {
             var bayar = $("#bayar").val();
             var total = $("#input-total").val();
@@ -282,6 +283,8 @@
         $("#btn-cetak").click(function(){
           ajax_print('<?= base_url()?>cetak/ajax_transkasi/<?= $transaksi->faktur; ?>');
         });
+        gettotal();
+        $("#bayar").keyup();
    });
    function gettotal(){
       var total = $("#input-total").val();
