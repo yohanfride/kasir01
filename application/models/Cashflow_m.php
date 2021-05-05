@@ -75,7 +75,7 @@ class cashflow_m extends My_Model{
 		if($jenis != ''){
 			$sql.= " AND a.jenis = '$jenis' ";
 		}
-		$sql.= "GROUP BY date(a.date_add) ORDER by tanggal ASC ";
+		$sql.= "GROUP BY date(a.tanggal) ORDER by tanggal ASC ";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
@@ -88,7 +88,7 @@ class cashflow_m extends My_Model{
 		if($jenis != ''){
 			$sql.= " AND a.jenis = '$jenis' ";
 		}
-		$sql.= "GROUP BY week(a.date_add) ORDER by tanggal ASC ";
+		$sql.= "GROUP BY week(a.tanggal) ORDER by tanggal ASC ";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
@@ -101,7 +101,7 @@ class cashflow_m extends My_Model{
 		if($jenis != ''){
 			$sql.= " AND a.jenis = '$jenis' ";
 		}
-		$sql.= "GROUP BY week(a.date_add) ORDER by tanggal ASC ";
+		$sql.= "GROUP BY week(a.tanggal) ORDER by tanggal ASC ";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
@@ -115,7 +115,7 @@ class cashflow_m extends My_Model{
 		if($jenis != ''){
 			$sql.= " AND a.jenis = '$jenis' ";
 		}
-		$sql.= "GROUP BY month(a.date_add) ORDER by bulan ASC ) b ON b.bulan = c.id";
+		$sql.= "GROUP BY month(a.tanggal) ORDER by bulan ASC ) b ON b.bulan = c.id";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
@@ -148,7 +148,7 @@ class cashflow_m extends My_Model{
 		if($jenis != ''){
 			$sql.= " AND a.jenis = '$jenis' ";
 		}
-		$sql.= "GROUP BY date(a.date_add) ORDER by tanggal ASC ";
+		$sql.= "GROUP BY date(a.tanggal) ORDER by tanggal ASC ";
 		$res = $this->db->query($sql);
 		$r=$res->result();
 		$res->free_result();
